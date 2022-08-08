@@ -22,7 +22,10 @@ use App\Http\Controllers\FormMonitoreoUsoMosqController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EstadosFormController;
-
+use App\Http\Controllers\AsistenciatsController;
+use App\Http\Controllers\AsistenciaacsController;
+use App\Http\Controllers\MonitoevaluMosqsController;
+use App\Http\Controllers\ProduccionController;
 
 Route::get('/', function () {
     return view('login');
@@ -53,19 +56,20 @@ Route::post("/EliminarActaEntregaIMM/",[actaentregaimmsController::class, "Elimi
 Route::get("EditarActaEntregaIMM/{id}",[actaentregaimmsController::class, "EditarActaEntregaIMM"])->name('EditarActaEntregaIMM');
 
 
-Route::get("AsistenciaTraCom",[AsisttrabcomsController::class, "AsistenciaTraCom"])->name('AsistenciaTraCom');
-Route::get("ListarAsistenciaTraCom",[AsisttrabcomsController::class, "ListarAsistenciaTraCom"])->name('ListarAsistenciaTraCom');
-Route::post("GrabarAsistTrabCom",[AsisttrabcomsController::class, "GrabarAsistTrabCom"])->name('GrabarAsistTrabCom');
-Route::get("EditarAsistenciaTraCom/{id}",[AsisttrabcomsController::class, "EditarAsistenciaTraCom"])->name('EditarAsistenciaTraCom');
-Route::post("ActualizarAsistTrabCom",[AsisttrabcomsController::class, "ActualizarAsistTrabCom"])->name('ActualizarAsistTrabCom');
+// Route::get("AsistenciaTraCom",[AsisttrabcomsController::class, "AsistenciaTraCom"])->name('AsistenciaTraCom');
+// Route::get("ListarAsistenciaTraCom",[AsisttrabcomsController::class, "ListarAsistenciaTraCom"])->name('ListarAsistenciaTraCom');
+// Route::post("GrabarAsistTrabCom",[AsisttrabcomsController::class, "GrabarAsistTrabCom"])->name('GrabarAsistTrabCom');
+// Route::get("EditarAsistenciaTraCom/{id}",[AsisttrabcomsController::class, "EditarAsistenciaTraCom"])->name('EditarAsistenciaTraCom');
+// Route::post("ActualizarAsistTrabCom",[AsisttrabcomsController::class, "ActualizarAsistTrabCom"])->name('ActualizarAsistTrabCom');
 
 Route::get("tcs_crud",[tcsController::class, "ListaTCS"])->name('Lista.TCS');//todos se van al mismo formulario
 Route::post("tcs_graba",[tcsController::class, "GrabarTCS"])->name('GrabarTCS');
-Route::post("tcs_editar",[tcsController::class, "EditarTCS"])->name('EditarTCS');
+Route::get("EditarTCS/{id}",[tcsController::class, "EditarTCS"])->name('Editar.TCS');
 Route::post("tcsregistro",[tcsController::class, "tcsregistro"])->name('tcs.registro');
 Route::get("ListaTCSjson",[tcsController::class, "ListaTCSjson"])->name('Lista.TCSjson');
+Route::get("ListaTCStable",[tcsController::class, "ListaTCStable"])->name('Lista.TCStable');
 Route::get("BuscaDNIACS/{id}",[tcsController::class, "BuscaDNIACS"])->name('Busca.DNIACS');
-
+Route::post("ActualizarACS",[tcsController::class, "ActualizarACS"])->name('Actualizar.ACS');
 
 Route::get("ListarCompetencias",[CompetenciasController::class, "ListarCompetencias"])->name('ListarCompetencias');
 Route::post("CrearCompetencias",[CompetenciasController::class, "CrearCompetencias"])->name('Crear.Competencias');
@@ -113,7 +117,25 @@ Route::post("ActualizarformPacientedtac",[DtacsForm1Controller::class, "Actualiz
 Route::get("ListarRegiones/{id}",[DtacsForm1Controller::class, "ListaRegiones"])->name('Listar.Regiones');
 
 
+Route::get('AsistenciaTS', [AsistenciatsController::class,"AsistenciaTS"])->name('Asistencia.TS');
+Route::get('ListaAsistenciaTS', [AsistenciatsController::class,"ListaAsistenciaTS"])->name('Lista.AsistenciaTS');
+Route::post('GuardarAsistenciaTS', [AsistenciatsController::class,"GuardarAsistenciaTS"])->name('Guardar.AsistenciaTS');
+Route::get('EditarAsistenciaTS/{id}', [AsistenciatsController::class,"EditarAsistenciaTS"])->name('Editar.AsistenciaTS');
+Route::post('ActualizarAsistenciaTS', [AsistenciatsController::class,"ActualizarAsistenciaTS"])->name('Actualizar.AsistenciaTS');
+Route::post('NuevoNombreTS', [AsistenciatsController::class,"NuevoNombreTS"])->name('Nuevo.NombreTS');
+Route::get('ListaNombresTS/{id}', [AsistenciatsController::class,"ListaNombresTS"])->name('Lista.NombresTS');
+Route::get('EditarRegistroNombre/{id}', [AsistenciatsController::class,"EditarRegistroNombre"])->name('Editar.RegistroNombre');
+Route::post('ActualizarRegistroNombre', [AsistenciatsController::class,"ActualizarRegistroNombre"])->name('Actualizar.RegistroNombre');
 
+Route::get('AsistenciaACS', [AsistenciaacsController::class,"AsistenciaACS"])->name('Asistencia.ACS');
+Route::get('ListaAsistenciaACS', [AsistenciaacsController::class,"ListaAsistenciaACS"])->name('Lista.AsistenciaACS');
+Route::post('GuardarAsistenciaACS', [AsistenciaacsController::class,"GuardarAsistenciaACS"])->name('Guardar.AsistenciaACS');
+Route::get('EditarAsistenciaACS/{id}', [AsistenciaacsController::class,"EditarAsistenciaACS"])->name('Editar.AsistenciaACS');
+Route::post('ActualizarAsistenciaACS', [AsistenciaacsController::class,"ActualizarAsistenciaACS"])->name('Actualizar.AsistenciaACS');
+Route::post('NuevoNombreACS', [AsistenciaacsController::class,"NuevoNombreACS"])->name('Nuevo.NombreACS');
+Route::get('ListaNombresACS/{id}', [AsistenciaacsController::class,"ListaNombresACS"])->name('Lista.NombresACS');
+Route::get('EditarRegistroNombreACS/{id}', [AsistenciaacsController::class,"EditarRegistroNombreACS"])->name('Editar.RegistroNombre');
+Route::post('ActualizarRegistroNombreACS', [AsistenciaacsController::class,"ActualizarRegistroNombreACS"])->name('Actualizar.RegistroNombre');
 
 
 Route::get("ListarResultados/{id}",[PruebasyresultadosController::class, "ListarResultados"])->name('Listar.Resultados');
@@ -131,6 +153,9 @@ Route::get("Mosquiteros",[FormmosquiterosController::class, "Mosquiteros"])->nam
 Route::get("ListarMosquiteros",[FormmosquiterosController::class, "ListarMosquiteros"])->name('Listar.Mosquiteros');
 Route::get("EditarMosquiteros/{id}",[FormmosquiterosController::class, "EditarMosquiteros"])->name('Editar.Mosquiteros');
 Route::post("ActualizarMosquiteros",[FormmosquiterosController::class, "ActualizarMosquiteros"])->name('Actualizar.Mosquiteros');
+Route::post("ActualizaEntregaMosq",[FormmosquiterosController::class, "ActualizaEntregaMosq"])->name('Actualiza.EntregaMosq');
+Route::get("EditarEntregaMosq/{id}",[FormmosquiterosController::class, "EditarEntregaMosq"])->name('Editar.EntregaMosq');
+
 
 Route::get("ListarPersonaMosquitero/{id}",[FormmosquiterosController::class, "ListarPersonaMosquitero"])->name('Listar.PersonaMosquitero');
 Route::post("GuardaPersonaMosquitero",[FormmosquiterosController::class, "GuardaPersonaMosquitero"])->name('Guarda.PersonaMosquitero');
@@ -170,6 +195,22 @@ Route::get("ListarReaccionesAdversas/{id}",[FormMonitoreoUsoMosqController::clas
 Route::post("GuardarReaccionAdversa",[FormMonitoreoUsoMosqController::class, "GuardarReaccionAdversa"])->name('Guardar.ReaccionAdversa');
 Route::get("EditarReaccionAdversa/{id}",[FormMonitoreoUsoMosqController::class, "EditarReaccionAdversa"])->name('Editar.ReaccionAdversa');
 Route::post("ActualizarReaccionAdversa",[FormMonitoreoUsoMosqController::class, "ActualizarReaccionAdversa"])->name('Actualizar.ReaccionAdversaReaccionAdversa');
+
+Route::get("MonitoEvaluUsoMosq",[MonitoevaluMosqsController::class, "MonitoEvaluUsoMosq"])->name('Monito.EvaluUsoMosq');
+Route::get("ListaMonitoreo",[MonitoevaluMosqsController::class, "ListaMonitoreo"])->name('Lista.Monitoreo');
+Route::post("GuardaMonitoreo",[MonitoevaluMosqsController::class, "GuardaMonitoreo"])->name('Guarda.Monitoreo');
+Route::get("EditarMonitoreo/{id}",[MonitoevaluMosqsController::class, "EditarMonitoreo"])->name('Editar.Monitoreo');
+Route::post("ActualizarMonitoreo",[MonitoevaluMosqsController::class, "ActualizarMonitoreo"])->name('Actualizar.Monitoreo');
+
+Route::get("ListaEncuestado/{id}",[MonitoevaluMosqsController::class, "ListaEncuestado"])->name('Lista.Encuestado');
+Route::post("GuardarEncuestado",[MonitoevaluMosqsController::class, "GuardarEncuestado"])->name('Guardar.Encuestado');
+Route::get("EditarEncuestado/{id}",[MonitoevaluMosqsController::class, "EditarEncuestado"])->name('Editar.Encuestado');
+Route::post("ActualizarEncuestado",[MonitoevaluMosqsController::class, "ActualizarEncuestado"])->name('Actualizar.Encuestado');
+
+Route::get("Produccion",[ProduccionController::class, "Produccion"])->name('Lista.Produccion');
+Route::get("NumeroRegistros",[ProduccionController::class, "NumeroRegistros"])->name('Numero.Registros');
+
+
 /////////////////////////////////////////LOGIN AND REGISTER
 Route::get('login',function(){
     return view('login');

@@ -49,6 +49,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         $obj->CodigoTcsVisita1=request('CodigoTCS1');
         $obj->NombreTsVisita1=request('NombreTS1');
         $obj->CodigoHisTsVisita1=request('CodigoHISTS1');
+        $obj->user=auth()->user()->name;
         $obj->save();
     }
 
@@ -81,6 +82,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         $obj->CodigoTcsVisita1=request('CodigoTCS1');
         $obj->NombreTsVisita1=request('NombreTS1');
         $obj->CodigoHisTsVisita1=request('CodigoHISTS1');
+        $obj->user=auth()->user()->name;
         $obj->save();
 
         //AQUI VA GRABAR EN ESTADO FORM 
@@ -106,6 +108,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         ->leftjoin('medios_transportes','medios_transportes.id','=','form_seguimiento_promotor_saluds.MedioTransporte')
         ->leftjoin('estsalud','estsalud.id','=','form_seguimiento_promotor_saluds.NombreEstablecimiento')
         ->select('form_seguimiento_promotor_saluds.id as idform','form_seguimiento_promotor_saluds.*','dists.*','provs.*','dptos.*','medios_transportes.*','estsalud.*')
+        ->where('form_seguimiento_promotor_saluds.user','like',$nombre)
         ->get();
         return datatables()->of($lista)->tojson();
         
@@ -144,6 +147,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         ->leftjoin('medios_transportes','medios_transportes.id','=','form_seguimiento_promotor_saluds.MedioTransporte')
         ->leftjoin('estsalud','estsalud.id','=','form_seguimiento_promotor_saluds.NombreEstablecimiento')
         ->select('form_seguimiento_promotor_saluds.id as idform','form_seguimiento_promotor_saluds.*','dists.*','provs.*','dptos.*','medios_transportes.*','estsalud.*')
+        ->where('form_seguimiento_promotor_saluds.user','like',$nombre)
         ->get();
 
         $tcs=DB::table('tcs')
@@ -250,6 +254,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         $obj->CodigoTcsVisita1=request('CodigoTCS1e');
         $obj->NombreTsVisita1=request('NombreTS1e');
         $obj->CodigoHisTsVisita1=request('CodigoHISTS1e');
+        $obj->user=auth()->user()->name;
         $obj->save();
         // $data=['mensaje'=>'Actualizado'];
         // return response()->json($data);
@@ -325,6 +330,13 @@ class FormSeguimientoPromotorSaludController extends Controller
         $formps_hoja2stock=DB::table('formps_hoja2stocks')->select('formPS')->distinct()->get();
         $medios_transportes=DB::table('medios_transportes')->get();
 
+        $nombre='%';
+        if (auth()->user()->is_admin) {
+            $nombre='%';
+        }else{
+            $nombre=auth()->user()->name;
+        }
+
         $lista=DB::table('form_seguimiento_promotor_saluds')
         ->leftjoin('dists','dists.id','=','form_seguimiento_promotor_saluds.Distrito')
         ->leftjoin('provs','provs.id','=','form_seguimiento_promotor_saluds.Provincia')
@@ -332,6 +344,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         ->leftjoin('medios_transportes','medios_transportes.id','=','form_seguimiento_promotor_saluds.MedioTransporte')
         ->leftjoin('estsalud','estsalud.id','=','form_seguimiento_promotor_saluds.NombreEstablecimiento')
         ->select('form_seguimiento_promotor_saluds.id as idform','form_seguimiento_promotor_saluds.*','dists.*','provs.*','dptos.*','medios_transportes.*','estsalud.*')
+        ->where('form_seguimiento_promotor_saluds.user','like',$nombre)
         ->get();
 
         $tcs=DB::table('tcs')
@@ -365,7 +378,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         $obj->CodigoTcsVisita1=request('CodigoTCS1');
         $obj->NombreTsVisita1=request('NombreTS1');
         $obj->CodigoHisTsVisita1=request('CodigoHISTS1');
- 
+        $obj->user=auth()->user()->name;
         $obj->save();
         return redirect()->route('Listar.formps')->with(['message'=>$codigo]);
 

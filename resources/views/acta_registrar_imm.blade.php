@@ -21,7 +21,7 @@
                                 <th style="text-align: center;">Prov.</th>
                                 <th style="text-align: center;">Dist.</th>
                                 <th style="text-align: center;">Localidad</th>
-                                <th style="text-align: center;">Nombre del TCS</th>
+                                <th style="text-align: center;">Nombre del ACS</th>
                                 <th style="text-align: center;">DNI</th>
                                 <th style="text-align: center;">Com. de Procedencia</th>
                                 <th style="text-align: center;">Nombre del ESS</th>
@@ -41,7 +41,7 @@
         <form  id="formGrabarEntregaMateriales">
             @csrf
             <div class="modal fade" id="GrabarEntregaMaterialesModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Crear Acta de Entrega IMM</h5>
@@ -50,31 +50,31 @@
                         <div class="modal-body">
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Departamento:</label>
-                                        <select name="Departamento" id="" class="single-select">
+                                        <select name="Departamento" id="Departamento" class="form-select form-select-sm mb-3" disabled>
                                             @foreach ($dpto as $d )
                                                 <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
                                             @endforeach
                                         </select>      
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Provincia:</label>
-                                        <select name="Provincia" id="" class="single-select">
+                                        <select name="Provincia" id="Provincia" class="form-select form-select-sm mb-3" disabled>
                                             @foreach ($prov as $p)
                                                 <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Distrito:</label>
-                                        <select name="Distrito" id="" class="single-select">
+                                        <select name="Distrito" id="Distrito" class="single-select" onchange="ObtieneRegiones('Distrito')">
                                             @foreach ($dist as $di)
                                                 <option value="{{$di->id}}">{{$di->nombre_dist}}</option>    
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Localidad:</label>
                                         <input name="Localidad" type="text" class="form-control form-control-sm" value="-">
                                     </div>
@@ -82,39 +82,49 @@
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-lg-4">
-                                        <label for="form" class="form-label">Nombre del TCS</label>
-                                        <input name="NombreTCS" id="NombreTCS" value="-" class="form-control form-control-sm" >
+                                    <div class="col-xl-5">
+                                        {{-- <label for="form" class="form-label">Nombre del ACS</label>
+                                        <input name="NombreTCS" id="NombreTCS" value="-" class="form-control form-control-sm" > --}}
+                                        <label class="form-label">Nombre del ACS</label>
+                                        <div class="input-group">
+                                            <select class="single-select" name="NombreTCS" id="NombreTCS">
+                                                @foreach ($tcs as $tc)
+                                                    <option value="{{$tc->dni_tcs}}">{{$tc->dni_tcs}}-{{$tc->nombre_tcs}}</option>
+                                                @endforeach
+                                            </select>
+                                            <button class="btn btn-outline-secondary btnAgregarACS" type="button"><i class='bx bx-user-plus'></i>
+                                            </button>
+                                        </div>  
                                     </div>
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label for="form" class="form-label">DNI</label>
-                                        <input name="DNI" id="DNI" value="" class="form-control form-control-sm" type="number">
+                                        <input name="DNI" id="DNI" value="" class="form-control form-control-sm" type="text">
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label for="form" class="form-label">Com. Proc.</label>
                                         <input name="Comunidad" id="Comunidad" value="-" class="form-control form-control-sm">
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-xl-3">
                                         <label for="form" class="form-label">Nombre del ESS</label>
                                         <input name="NombreESS" id="NombreESS" value="-" class="form-control form-control-sm" required="">
                                     </div>
                                 </div>
                                 <div class="row">
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Tiemp.Horas EESS</label>
                                         <input name="Tiempo" type="number" id="Tiempo" value="0" class="form-control form-control-sm">
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Insumos, Med. y Otros</label>
                                         <input name="IMM" id="IMM" value="0" class="form-control form-control-sm" required="required" >        
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Cantidad de Mat.</label>
                                         <input name="Cantidad" type="number" id="Cantidad" value="0" class="form-control form-control-sm">        
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Fecha de Entre.</label>
                                         <input name="Fecha" type="date" id="Fecha" class="form-control form-control-sm">
                                     </div>
@@ -135,7 +145,7 @@
         <form  id="formEditarEntregaMateriales" action="ActualizarActaEntregaIMM" method="POST">
             @csrf
             <div class="modal fade" id="EditarEntregaMaterialesModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Editar Acta de Entrega IMM</h5>
@@ -145,23 +155,23 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <input type="text" id="editId" name="editId" hidden>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Departamento:</label>
-                                        <select name="editDepartamento" id="editDepartamento" class="single-select" >
+                                        <select name="editDepartamento" id="editDepartamento" class="form-select form-select-sm mb-3" disabled>
                                             @foreach ($dpto as $d)
                                                 <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>        
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Provincia:</label>
-                                        <select name="editProvincia" id="editProvincia" class="single-select" >
+                                        <select name="editProvincia" id="editProvincia" class="form-select form-select-sm mb-3" disabled>
                                             @foreach ($prov as $p)
                                                 <option value="{{$p->id}}" selected>{{$p->nombre_prov}}</option>        
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Distrito:</label>
                                             <select name="editDistrito" id="editDistrito" class="single-select" onchange="ObtieneRegiones('editDistrito');">
                                                 @foreach ($dist as $d)
@@ -170,7 +180,7 @@
                                             </select>
                                         
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-xl-3">
                                         <label for="">Localidad:</label>
                                         <input name="editLocalidad" id="editLocalidad"  type="text" class="form-control form-control-sm" required="required">
                                     </div>
@@ -178,38 +188,47 @@
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-lg-4">
-                                        <label for="form" class="form-label">Nombre Agente Cmo.</label>
-                                        <input name="editNombreTCS" id="editNombreTCS" class="form-control form-control-sm" required="required">
+
+                                    <div class="col-xl-5">
+                                        <label class="form-label">Nombre del ACS</label>
+                                        <div class="input-group">
+                                            <select class="single-select" name="editNombreTCS" id="editNombreTCS">
+                                                @foreach ($tcs as $tc)
+                                                    <option value="{{$tc->dni_tcs}}">{{$tc->dni_tcs}}-{{$tc->nombre_tcs}}</option>
+                                                @endforeach
+                                            </select>
+                                            <button class="btn btn-outline-secondary btnAgregarACS" type="button"><i class='bx bx-user-plus'></i>
+                                            </button>
+                                        </div>  
                                     </div>
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label for="form" class="form-label">DNI</label>
-                                        <input name="editDNI" id="editDNI" class="form-control form-control-sm">
+                                        <input name="editDNI" id="editDNI" class="form-control form-control-sm" type="text">
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label for="form" class="form-label">Comu.Proc.</label>
                                         <input name="editComunidad" id="editComunidad" class="form-control form-control-sm" required="required">
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-xl-4">
                                         <label for="form" class="form-label">Nombre del ESS</label>
                                         <input name="editNombreESS" id="editNombreESS" v class="form-control form-control-sm" required="required">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Tiemp.Horas EESS</label>
                                         <input name="editTiempo" type="number" id="editTiempo"  class="form-control form-control-sm" required="required">
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Insumos, Med. y Otros</label>
                                         <input name="editIMM" id="editIMM" class="form-control form-control-sm" required="required" >        
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Cantidad de Mate.</label>
                                         <input name="editCantidad" type="number" id="editCantidad" value="0.00" class="form-control form-control-sm" required="required">        
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-xl-2">
                                         <label type= class="form-label">Fecha de Entrega</label>
                                         <input name="editFecha" type="date" id="editFecha" class="form-control form-control-sm" value="2022-06-01" required="required">
                                     </div>
@@ -226,6 +245,37 @@
             </div>
         </form>
 
+        <form id="formAgregaACS">
+            @csrf
+            <div class="modal fade" id="formAgregaACSModal" aria-hidden="true" style="z-index: 5000">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Registrar ACS</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="col-sm-12">
+                                <label for="" class="form-label">DNI</label>
+                                
+                                <input type="text" class="form-control" id="dni_tcs"name="dni_tcs" aria-describedby="validationServer05Feedback" required>
+								<div id="validationServer05Feedback" class="invalid-feedback">El N° Documento ya existe.</div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control formm-control-sm" id="nombre_tcs" name="nombre_tcs">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" id="btnGuardar" class="btn-sm btn-warning btnGuardarACS">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         
     </div>
 </div>
@@ -234,8 +284,76 @@
 
 @section('script_table')
     <script>
+        $("#dni_tcs").keyup(function(){
+            $.ajax({
+                type: "GET",
+                url: "BuscaDNIACS/"+$("#dni_tcs").val(),
+                dataType: "json",
+                success: function (response) {
+                    if (response['estado']=='No_Disponible') {
+                        $("#dni_tcs").addClass('is-invalid');
+                        $(".btnGuardarACS").hide();
+                    }else{
+                        $("#dni_tcs").removeClass('is-invalid');
+                        $(".btnGuardarACS").show();
+                    }
+                }
+            });
+        });
+        
+        $(document).on("click",".btnGuardarACS",function(e){
+            e.preventDefault(); 
+            CargarACS();
+        });
+
+        $(document).on("click",".btnAgregarACS",function(){
+            $("#formAgregaACSModal").modal('show')
+        });
+        $(document).on("click",".btnAgregarACSn",function(){
+            $("#formAgregaACSModal").modal('show')
+        });
+
+        function CargarACS(){
+            var serializedData = $("#formAgregaACS").serialize();
+            $.ajax({
+                type: "POST",
+                url: "tcsregistro",
+                data: serializedData,
+                dataType: "json",
+                success: function (response) {
+                    round_success_noti("ACS Registrado");
+                    $.ajax({
+                        type: "GET",
+                        url: "ListaTCSjson",
+                        dataType: "json",
+                        success: function (response) {
+                            $("#NombreTCS").empty();
+                            $("#editNombreTCS").empty();
+                            $.each(response, function (key, item){
+                                if ((item.dni_tcs)==$("#dni_tcs").val()) {
+                                    $("#NombreTCS").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#editNombreTCS").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                }else{
+                                    $("#NombreTCS").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#editNombreTCS").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');    
+                                }
+                                
+                            });  
+                        }
+                    });
+                },
+                error: function (response) {
+                    round_error_noti()
+                }
+                
+            });
+            $("#formAgregaACSModal").modal('hide');
+        }
+
         $("#formGrabarEntregaMateriales").submit(function(e){
             e.preventDefault();
+            $("#Departamento").prop('disabled', false);
+            $("#Provincia").prop('disabled', false);
             var serializedData=$("#formGrabarEntregaMateriales").serialize();
             $.ajax({
                 type: "POST",
@@ -251,6 +369,8 @@
                 }
             });
             $("#GrabarEntregaMaterialesModal").modal('hide');
+            $("#Departamento").prop('disabled', true);
+            $("#Provincia").prop('disabled', true);
         });
 
         $(document).on("click",".btnNuevoIMM",function(){
@@ -260,8 +380,8 @@
     <script>
         $("#formEditarEntregaMateriales").submit(function(e){
             e.preventDefault();
-            // $("#editDepartamento").prop('disabled', false);
-            // $("#editProvincia").prop('disabled', false);
+            $("#editDepartamento").prop('disabled', false);
+            $("#editProvincia").prop('disabled', false);
             var serializedData = $("#formEditarEntregaMateriales").serialize();
             $.ajax({
                 type: "POST",
@@ -272,8 +392,8 @@
                     $('#ListaInsumosMaterialesM').DataTable().ajax.reload();
                 }
             });
-            // $("#editDepartamento").prop('disabled', true);
-            // $("#editProvincia").prop('disabled', true);
+            $("#editDepartamento").prop('disabled', true);
+            $("#editProvincia").prop('disabled', true);
             $("#EditarEntregaMaterialesModal").modal('hide');
         });
     </script>
@@ -346,8 +466,8 @@
                 success: function (response) {
                     $.each(response.lista_regiones, function (key, item) { 
                         if ((item.distId)==($("#"+dist+"").val())) {
-                            // $("#departamento").val(item.dptoId).change();
-                            // $("#provincia").val(item.provId).change();
+                            $("#Departamento").val(item.dptoId).change();
+                            $("#Provincia").val(item.provId).change();
                             $("#editDepartamento").val(item.dptoId).change();
                             $("#editProvincia").val(item.provId).change();
                             return false;

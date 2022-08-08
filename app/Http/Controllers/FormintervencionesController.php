@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\formintervenciones;
 use App\Models\formintlocalidad;
 use App\Models\formacprogram;
-
+use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
@@ -41,6 +41,7 @@ class FormintervencionesController extends Controller
         $obj->JefeBrigada=request('JefeBrigada');
         $obj->FechaInicio=request('fecha_inicio');
         $obj->FechaFinal=request('fecha_final');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $data=['mensaje'=>'Actualizado'];
         return response()->json($data);
@@ -74,7 +75,6 @@ class FormintervencionesController extends Controller
         $obj->act_programadas=request('act_programadase');
         $obj->laminas=request('LaminasTomare');
         $obj->casas_fumigar=request('CasasRociare');
-        $obj->FechaIntervencion=request('FechaIntervencione');
         $obj->LaminasTomadas=request('LaminasTomadase');
         $obj->Vivax=request('Vivaxe');
         $obj->Falciparum=request('Falciparume');
@@ -83,6 +83,8 @@ class FormintervencionesController extends Controller
         $obj->TasaPre=request('TasaPree');
         $obj->ActDesa=request('ActDesae');
         $obj->CasasRociadas=request('CasasRociadase');
+        $obj->FechaInicio=request('FechaInicioe');
+        $obj->FechaFinal=request('FechaFinale');
         $obj->save();
         $data=['mensaje'=>'Actualizado'];
         return response()->json($data);
@@ -103,7 +105,6 @@ class FormintervencionesController extends Controller
         $obj->act_programadas=request('act_programadas');
         $obj->laminas=request('LaminasTomar');
         $obj->casas_fumigar=request('CasasRociar');
-        $obj->FechaIntervencion=request('FechaIntervencion');
         $obj->LaminasTomadas=request('LaminasTomadas');
         $obj->Vivax=request('Vivax');
         $obj->Falciparum=request('Falciparum');
@@ -112,6 +113,8 @@ class FormintervencionesController extends Controller
         $obj->TasaPre=request('TasaPre');
         $obj->ActDesa=request('ActDesa');
         $obj->CasasRociadas=request('CasasRociadas');
+        $obj->FechaInicio=request('FechaInicio');
+        $obj->FechaFinal=request('FechaFinal');
 
         $obj->save();
         $data=['mensaje'=>'Actualizado'];
@@ -188,6 +191,7 @@ class FormintervencionesController extends Controller
         $obj->JefeBrigada=request('JefeBrigadae');
         $obj->FechaInicio=request('fecha_inicioe');
         $obj->FechaFinal=request('fecha_finale');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $data=['mensaje'=>'Actualizado'];
         return response()->json($data);
@@ -219,6 +223,7 @@ class FormintervencionesController extends Controller
         $obj->JefeBrigada=request('JefeBrigada');
         $obj->FechaInicio=request('fecha_inicio');
         $obj->FechaFinal=request('fecha_final');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $id=DB::table('formintervenciones')->select("id")->latest()->first();
         //id para el registro de un solo formulario y cod para el registro en el otro form en forma de lista
@@ -233,13 +238,21 @@ class FormintervencionesController extends Controller
     }
 
     public function ListarIntervenciones()
-    {
+    {   
+        $nombre='%';
+        if (auth()->user()->is_admin) {
+            $nombre='%';
+        }else{
+            $nombre=auth()->user()->name;
+        }
+
         $lista=DB::table('formintervenciones')
         ->leftjoin('dists','dists.id','=','formintervenciones.Distrito')
         ->leftjoin('provs','provs.id','=','formintervenciones.Provincia')
         ->leftjoin('dptos','dptos.id','=','formintervenciones.Departamento')
         ->select('formintervenciones.*','formintervenciones.id as IntervencionId','dptos.nombre_dpto',
         'provs.nombre_prov','dists.nombre_dist')
+        ->where('formintervenciones.user','like',$nombre)
         ->get();
         return datatables()->of($lista)->toJson();
     }

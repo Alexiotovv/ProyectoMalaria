@@ -7,6 +7,26 @@ use DB;
 
 class tcsController extends Controller
 {
+    public function ActualizarACS(Request $request)
+    {
+        $id=request("id");
+        $obj=tcs::findOrFail($id);
+        $obj->dni_tcs=request("dni_tcs");
+        $obj->nombre_tcs=request("nombre_tcs");
+        $obj->save();
+        $msje=['MEnsaje'=>'ok'];
+        return response()->json($msje);
+    }
+    
+    public function EditarTCS($id)
+    {        
+        $lista = DB::table('tcs')
+        ->where('tcs.id','=',$id)
+        ->select('tcs.*')
+        ->get();
+        return response()->json($lista);
+    }
+
     public function BuscaDNIACS($id)
     {
         $obj=DB::table('tcs')
@@ -35,6 +55,11 @@ class tcsController extends Controller
         $lista_tcs = DB::table('tcs')->get();   
         return response()->json($lista_tcs);
     }
+    public function ListaTCSTable()
+    {
+        $lista = DB::table('tcs')->get();   
+        return datatables()->of($lista)->toJson();
+    }
 
     public function ListaTCS(Request $request)
     {        
@@ -52,16 +77,7 @@ class tcsController extends Controller
         return view('tcs_crud',['lista_tcs'=>$lista_tcs]);
     }
     
-    public function EditarTCS(Request $request)
-    {        
-        $id=request('id');
-        $obj = tcs::findOrFaill($id);
-        $obj->dni_tcs=request('editdni');
-        $obj->nombre_tcs=request('editnombre');
-        $obj->save();
-        $lista_tcs = DB::table('tcs')->get();
-        return view('tcs_crud',['lista_tcs'=>$lista_tcs]);
-    }
+    
 
     // public function editar_actividades(Request $request)
     // {

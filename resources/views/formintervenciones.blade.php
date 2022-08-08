@@ -13,23 +13,25 @@
             <div class="card-body">
                 <div class="table-responsive">
                 <table id="ListarIntervenciones" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Código</th>
-                            <th>Acciones</th>
-                            <th>Dpto</th>
-                            <th>Provincia</th>
-                            <th>Distrito</th>
-                            <th>Rio/Quebrada</th>
-                            <th>JefeBrigada</th>
-                            <th>FechaInicio</th>
-                            <th>FechaFinal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <div>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Código</th>
+                                <th>Acciones</th>
+                                <th>Dpto</th>
+                                <th>Provincia</th>
+                                <th>Distrito</th>
+                                <th>Rio/Quebrada</th>
+                                <th>JefeBrigada</th>
+                                <th>FechaInicio</th>
+                                <th>FechaFinal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
+                        </tbody>
+                    </div>
                 </table>
                 </div>
             </div>
@@ -137,7 +139,7 @@
                                 </div>
                                 <div class="col-4">
                                     <label for="form" class="form-label">Distrito</label>
-                                    <select name="Distritoe" id="Distritoe" class="single-select" onchange="ObtieneRegiones('Distrito');">
+                                    <select name="Distritoe" id="Distritoe" class="single-select" onchange="ObtieneRegiones('Distritoe');">
                                         @foreach ($dist as $d)
                                             <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
                                         @endforeach
@@ -262,10 +264,9 @@
                                     <input type="number" step="0.01" class="form-control form-control-sm" name="Casosul8sem" id="Casosul8sem">
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Índice Positividad Últ. 8 Sem.</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8sem" id="Iptul8sem" value="1900-01-01">
+                                    <label for="form" class="form-label">Índice Positividad Últ. 8 Sem.(N°Casos/Lám)x100</label>
+                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8sem" id="Iptul8sem" readonly>
                                 </div>
-        
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -314,11 +315,11 @@
                                     <input type="number" step="0.01" class="form-control form-control-sm" name="Casosul8seme" id="Casosul8seme">
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Índice Positividad Últ. 8 Sem.</label>
-                                    <input type="text" step="0.01" class="form-control form-control-sm" name="Iptul8seme" id="Iptul8seme" value="1900-01-01">
+                                    <label for="form" class="form-label">Índ. Pos. Últ. 8 Sem.(N°Casos/Lám)x100</label>
+                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8seme" id="Iptul8seme" readonly>
                                 </div>
-        
                             </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -355,15 +356,16 @@
                                                 <th>A.Programada</th>
                                                 <th>Laminas</th>
                                                 <th>N°CasasFumigar</th>
-                                                <th>Fech.Inter.</th>
                                                 <th>Lam.Tomadas</th>
                                                 <th>Vivax</th>
                                                 <th>Falcip.</th>
-                                                <th>%Prob.Muestr.</th>
+                                                <th>%Pob.Muestr.</th>
                                                 <th>IP</th>
                                                 <th>TP</th>
                                                 <th>Act.Desan</th>
                                                 <th>CasasRociadas</th>
+                                                <th>FechaInicio</th>
+                                                <th>FechaFinal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -392,7 +394,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <input type="text" name="idLocalidad_actpro" id="idLocalidad_actpro" hidden>
-                                    <label for="form" class="form-label">Actividades</label>
+                                    <label for="form" class="form-label">Actividad Programada</label>
                                     <select class="single-select" name="act_programadas" id="act_programadas">
                                         <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
                                         <option value="BH">BH-BARRIDO HEMÁTICO</option>    
@@ -420,10 +422,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Fecha Intervención</label>
-                                    <input type="date" value="1900-01-01" step="0.1" name="FechaIntervencion" id="FechaIntervencion" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
                                     <label for="form" class="form-label">Laminas Tomadas</label>
                                     <input type="number" value="0" name="LaminasTomadas" step="0.01" id="LaminasTomadas" class="form-control form-control-sm">      
                                 </div>
@@ -431,38 +429,72 @@
                                     <label for="form" class="form-label">Vivax</label>
                                     <input type="number" value="0" step="0.01" name="Vivax" id="Vivax" class="form-control form-control-sm">      
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">Falciparum</label>
                                     <input type="number" value="0" step="0.01" name="Falciparum" id="Falciparum" class="form-control form-control-sm">      
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Prob.Muestreada</label>
+                                    <label for="form" class="form-label">Pob.Muestreada(%)</label>
                                     <input type="number" value="0" step="0.01" name="ProbMuestreada" id="ProbMuestreada" class="form-control form-control-sm">      
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">IndicePositividad</label>
-                                    <input type="number" value="0" step="0.01" name="IndicePos" id="IndicePos" class="form-control form-control-sm">      
+                                    <label for="form" class="form-label">Ind.Pos.(N°Casos/Láminas)x100</label>
+                                    <input type="number" value="0" step="0.01" name="IndicePos" id="IndicePos" class="form-control form-control-sm" readonly>      
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">TasaPrevalencia</label>
                                     <input type="number" value="0" step="0.01" name="TasaPre" id="TasaPre" class="form-control form-control-sm">      
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Act.Desan.</label>
-                                    <input type="number" value="0" step="0.01" name="ActDesa" id="ActDesa" class="form-control form-control-sm">      
+                                    <label for="form" class="form-label">Act.Desarrollada</label>
+                                    <select class="single-select" name="ActDesa" id="ActDesa">
+                                        <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
+                                        <option value="BH">BH-BARRIDO HEMÁTICO</option>    
+                                        <option value="TM">TM-TRATAMIENTO MASIVO</option>
+                                        <option value="M">M-ENTREGA DE MOSQUITERO</option>
+                                        <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
+                                        <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
+                                        <option value="TP">TP-TASA DE PREVALENCIA</option>
+                                        <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
+                                        <option value="C">C-CONTROL</option>
+                                        <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
+                                        <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
+                                        <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
+                                        <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
+                                    </select>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">Casas Rocias y/o Fumigadas</label>
                                     <input type="number" value="0" step="0.01" name="CasasRociadas" id="CasasRociadas" class="form-control form-control-sm">      
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="" class="form-label">Fecha Inicio Intervención</label>
+                                    <input type="date" name="FechaInicio" id="FechaInicio" class="form-control">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="" class="form-label">Fecha Final Intervención</label>
+                                    <input type="date" name="FechaFinal" id="FechaFinal" class="form-control">
+                                </div>
+                            </div>      
+                                
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn-sm btn-warning">Guardar</button>
                         </div>
                     </div>
+                </div>
+
+            </div>
+
+                    
+
                 </div>
             </div>
         </form>
@@ -482,7 +514,7 @@
                                 <div class="col-lg-4">
                                     <label for="">Id</label>
                                     <input type="text" name="idact_pro" id="idact_pro" class="form-control form-control-sm" readonly>
-                                    <label for="form" class="form-label">Localidad</label>
+                                    <label for="form" class="form-label">Actividad Programada</label>
                                     <select class="single-select" name="act_programadase" id="act_programadase">
                                         <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
                                         <option value="BH">BH-BARRIDO HEMÁTICO</option>    
@@ -510,10 +542,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Fecha Intervención</label>
-                                    <input type="date" value="1900-01-01" name="FechaIntervencione" id="FechaIntervencione" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
                                     <label for="form" class="form-label">Laminas Tomadas</label>
                                     <input type="number" step="0.01" value="0" name="LaminasTomadase" id="LaminasTomadase" class="form-control form-control-sm">      
                                 </div>
@@ -530,20 +558,42 @@
                                     <input type="number" step="0.01" value="0" name="ProbMuestreadae" id="ProbMuestreadae" class="form-control form-control-sm">      
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">IndicePositividad</label>
-                                    <input type="number" step="0.01" value="0" name="IndicePose" id="IndicePose" class="form-control form-control-sm">      
+                                    <label for="form" class="form-label">IndicePos.(N°Casos/Lám)x100</label>
+                                    <input type="number" step="0.01" value="0" name="IndicePose" id="IndicePose" class="form-control form-control-sm" readonly>      
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">TasaPrevalencia</label>
                                     <input type="number" step="0.01" value="0" name="TasaPree" id="TasaPree" class="form-control form-control-sm">      
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="form" class="form-label">Act.Desan.</label>
-                                    <input type="number" value="0" name="ActDesae" id="ActDesae" class="form-control form-control-sm">      
+                                    <label for="form" class="form-label">Act.Desarrollada</label>
+                                    <select class="single-select" name="ActDesae" id="ActDesae">
+                                        <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
+                                        <option value="BH">BH-BARRIDO HEMÁTICO</option>    
+                                        <option value="TM">TM-TRATAMIENTO MASIVO</option>
+                                        <option value="M">M-ENTREGA DE MOSQUITERO</option>
+                                        <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
+                                        <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
+                                        <option value="TP">TP-TASA DE PREVALENCIA</option>
+                                        <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
+                                        <option value="C">C-CONTROL</option>
+                                        <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
+                                        <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
+                                        <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
+                                        <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
+                                    </select>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">Casas Rociadas y/o Fumigadas</label>
                                     <input type="number" value="0" name="CasasRociadase" id="CasasRociadase" class="form-control form-control-sm">      
+                                </div>
+                                <div class="col-xl-4">
+                                    <label for="" class="form-label">Fecha Inicio Intervención</label>
+                                    <input type="date" name="FechaInicioe" id="FechaInicioe" class="form-control">
+                                </div>
+                                <div class="col-xl-4">
+                                    <label for="" class="form-label">Fecha Final Intervención</label>
+                                    <input type="date" name="FechaFinale" id="FechaFinale" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -564,6 +614,82 @@
     <script>
         
         // <button class='btn-danger btn-sm btnEjecucionActividadProgramada'><i class='lni lni-control-panel'></i></button>"
+        $("#Casosul8sem").keyup(function(){
+            IndicePositividad($("#Lamtul8sem").val(),$("#Casosul8sem").val());
+        });
+        $("#Lamtul8sem").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividad($("#Lamtul8sem").val(),$("#Casosul8sem").val());
+        });
+
+        $("#Casosul8seme").keyup(function(){
+            IndicePositividad($("#Lamtul8seme").val(),$("#Casosul8seme").val());
+        });
+        $("#Lamtul8seme").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividad($("#Lamtul8seme").val(),$("#Casosul8seme").val());
+        });
+
+        
+        $("#LaminasTomadas").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividadA($("#LaminasTomadas").val(),parseInt($("#Vivax").val())+parseInt($("#Falciparum").val()));
+        });
+        $("#LaminasTomadase").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividadA($("#LaminasTomadase").val(),parseInt($("#Vivaxe").val())+parseInt($("#Falciparume").val()));
+        });
+        
+        $("#Vivax").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividadA($("#LaminasTomadas").val(),parseInt($("#Vivax").val())+parseInt($("#Falciparum").val()));
+        });
+        $("#Falciparum").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividadA($("#LaminasTomadas").val(),parseInt($("#Vivax").val())+parseInt($("#Falciparum").val()));
+        });
+
+        $("#Vivaxe").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividadA($("#LaminasTomadase").val(),parseInt($("#Vivaxe").val())+parseInt($("#Falciparume").val()));
+        });
+        $("#Falciparume").keyup(function(){
+            // IndicePositividad(parseFloat($("#Casosul8sem").val()),parseFloat($("#Lamtul8sem").val()));
+            IndicePositividadA($("#LaminasTomadase").val(),parseInt($("#Vivaxe").val())+parseInt($("#Falciparume").val()));
+        });
+
+
+        function IndicePositividadA(laminas,casos){
+            if (laminas>0) {
+            }else{
+                laminas=0
+            }
+            if (casos>0) {
+            }else{
+                casos=0
+            }
+            // alert(casos+" y "+ laminas);
+            var ip=(casos/laminas)*100;
+            // alert(ip);
+            $("#IndicePos").val(ip.toFixed(2));
+            $("#IndicePose").val(ip.toFixed(2));
+        }
+
+        function IndicePositividad (laminas,casos){
+            if (laminas>0) {
+            }else{
+                laminas=0
+            }
+            if (casos>0) {
+            }else{
+                casos=0
+            }
+            // alert(casos+" y "+ laminas);
+            var ip=(casos/laminas)*100;
+            // alert(ip);
+            $("#Iptul8sem").val(ip.toFixed(2));
+            $("#Iptul8seme").val(ip.toFixed(2));
+        }
 
         $("#formEditarActividadProgramada").submit(function(e){
             e.preventDefault();
@@ -589,6 +715,7 @@
             e.preventDefault();
             fila=$(this).closest("tr");
             id=parseInt((fila).find('td:eq(0)').text());
+
             $.ajax({
                 type: "GET",
                 url: "EditarActividadProgramada/"+id,
@@ -598,15 +725,16 @@
                     $("#act_programadase").val(response[0].act_programadas).change();
                     $("#LaminasTomare").val(response[0].laminas);
                     $("#CasasRociare").val(response[0].casas_fumigar);
-                    $("#FechaIntervencione").val(response[0].FechaIntervencion);
                     $("#LaminasTomadase").val(response[0].LaminasTomadas);
                     $("#Vivaxe").val(response[0].Vivax);
                     $("#Falciparume").val(response[0].Falciparum);
                     $("#ProbMuestreadae").val(response[0].ProbMuestreada);
                     $("#IndicePose").val(response[0].IndicePos);
                     $("#TasaPree").val(response[0].TasaPre);
-                    $("#ActDesae").val(response[0].ActDesa);
+                    $("#ActDesae").val(response[0].ActDesa).change();
                     $("#CasasRociadase").val(response[0].CasasRociadas);
+                    $("#FechaInicioe").val(response[0].FechaInicio);
+                    $("#FechaFinale").val(response[0].FechaFinal);
                    
                 }
             });
@@ -616,7 +744,6 @@
         $("#formAgregarActividadProgramada").submit(function(e){
             e.preventDefault();
             var serializedData = $("#formAgregarActividadProgramada").serialize();
-            
             $.ajax({
                 type: "POST",
                 url: "AgregarActividadProgramada",
@@ -634,6 +761,7 @@
         });
 
         $(document).on("click",".btnAgregarActividadProgramada",function(){
+
             $("#formAgregarActividadProgramadaModal").modal('show');
         });
 
@@ -642,6 +770,10 @@
             fila=$(this).closest("tr");
             id=parseInt(fila.find('td:eq(0)').text());
             $("#idLocalidad_actpro").val(id);
+
+            // numero_casos=parseInt((fila).find('td:eq(6)').text());
+            // $("#NumeroCasos").val(numero_casos);
+            // $("#NumeroCasose").val(numero_casos);
 
             $("#ListaActividadProgramada").DataTable({
             "destroy":true,
@@ -654,7 +786,6 @@
                 {data:"act_programadas"},
                 {data:"laminas"},
                 {data:"casas_fumigar"},
-                {data:"FechaIntervencion"},
                 {data:"LaminasTomadas"},
                 {data:"Vivax"},
                 {data:"Falciparum"},
@@ -662,7 +793,9 @@
                 {data:"IndicePos"},
                 {data:"TasaPre"},
                 {data:"ActDesa"},
-                {data:"CasasRociadas"}
+                {data:"CasasRociadas"},
+                {data:"FechaInicio"},
+                {data:"FechaFinal"},
             ],
             order:[0]
             });
@@ -755,7 +888,7 @@
                 {data:"Nvivienda"},
                 {data:"Lamtul8sem"}, 
                 {data:"Casosul8sem"},
-                {data:"Iptul8sem"}
+                {data:"Iptul8sem"},
             ],
             order:[0]
             });
@@ -885,7 +1018,9 @@
                 {data:"FechaInicio"},
                 {data:"FechaFinal"},
             ],
-            order:[0]
+            order:[0],
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
         });
         
 
@@ -910,6 +1045,8 @@
     var fecha = new Date();
     document.getElementById("fecha_inicio").value = fecha.toJSON().slice(0,10);
     document.getElementById("fecha_final").value = fecha.toJSON().slice(0,10);
+    document.getElementById("FechaInicio").value = fecha.toJSON().slice(0,10);
+    document.getElementById("FechaFinal").value = fecha.toJSON().slice(0,10);
 </script>
 @endsection
 

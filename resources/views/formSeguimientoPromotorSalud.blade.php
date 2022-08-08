@@ -45,7 +45,7 @@
                                     <th style="text-align: center;">N°Visita</th>
                                     <th style="text-align: center;">TransporteMasUsado</th>
                                     <th style="text-align: center;">FechaVisita</th>
-                                    <th style="text-align: center;">NombreACS</th>
+                                    <th style="text-align: center;">DNI_ACS</th>
                                     <th style="text-align: center;">CódigoACS</th>
                                     <th style="text-align: center;">NombreTS</th>
                                     <th style="text-align: center;">CódigoHIS</th>
@@ -218,11 +218,11 @@
                             <div class="row">
                                 <div class="col-xl-2">
                                     <label for="" class="form-label">Id</label>
-                                    <input type="text" class="form-control form-control-sm" name="idCompe" id="idCompe" readonly>
+                                    <input type="text" class="form-control" name="idCompe" id="idCompe" readonly>
                                 </div>
                                 <div class="col-xl-8">
                                     <label for="" class="form-label">NombreCompetencia</label>
-                                    <input type="text" class="form-control form-control-sm" name="NombreCompe" id="NombreCompe" readonly>
+                                    <input type="text" class="form-control" name="NombreCompe" id="NombreCompe" readonly>
                                 </div>
                             </div>
                             <div class="row">
@@ -263,11 +263,11 @@
                             <div class="row">
                                 <div class="col-xl-1">
                                     <label for="" class="form-label">Id</label>
-                                    <input type="text" class="form-control form-control-sm" name="idFormSeg" id="idFormSeg" readonly>
+                                    <input type="text" class="form-control" name="idFormSeg" id="idFormSeg" readonly>
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="form" class="form-label">Localidad</label>
-                                    <input type="text" value="--" class="form-control form-control-sm" name="Localidade" id="Localidade">
+                                    <input type="text" value="--" class="form-control" name="Localidade" id="Localidade">
                                 </div>
                                 <div class="col-xl-2">
                                     <label for="form" class="form-label" >Departamento</label>
@@ -306,11 +306,11 @@
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="form" class="form-label">Tiempo EESS a Localidad</label>
-                                    <input type="number" value="0" class="form-control form-control-sm" name="TiempoEESSLocalidade" id="TiempoEESSLocalidade">
+                                    <input type="number" value="0" step="0.01" class="form-control" name="TiempoEESSLocalidade" id="TiempoEESSLocalidade">
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="form" class="form-label">Tiempo Localidad a EESS</label>
-                                    <input type="number" value="0" class="form-control form-control-sm" name="TiempoLocalidadEESSe" id="TiempoLocalidadEESSe">
+                                    <input type="number" value="0" step="0.01" class="form-control" name="TiempoLocalidadEESSe" id="TiempoLocalidadEESSe">
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="form" class="form-label">M. Transporte mas Usado</label>
@@ -379,38 +379,6 @@
                 </div>
             </div>
         </form>
-
-        <form id="formAgregaACS">
-            @csrf
-            <div class="modal fade" id="formAgregaACSModal" aria-hidden="true" style="z-index: 5000">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Registrar ACS</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="col-sm-12">
-                                <label for="" class="form-label">DNI</label>
-                                
-                                <input type="text" class="form-control" id="dni_tcs"name="dni_tcs" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">El N° Documento ya existe.</div>
-                            </div>
-                            <div class="col-sm-12">
-                                <label for="" class="form-label">Nombre Completo</label>
-                                <input type="text" class="form-control formm-control-sm" id="nombre_tcs" name="nombre_tcs">
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
       
         <form  id="formCreaSegPS" action="{{route('Crear.formps')}}" method="POST">
                     @csrf
@@ -426,7 +394,7 @@
                                     <div class="row">
                                         <div class="col-xl-3">
                                             <label for="form" class="form-label">Localidad</label>
-                                            <input type="text" value="--" class="form-control form-control-sm" name="Localidad" id="Localidad">
+                                            <input type="text" value="--" class="form-control" name="Localidad" id="Localidad">
                                         </div>
                                         <div class="col-xl-2">
                                             <label for="form" class="form-label" >Departamento</label>
@@ -446,7 +414,7 @@
                                         </div>
                                         <div class="col-xl-4">
                                             <label for="form" class="form-label">Distrito</label>
-                                            <select class="single-select" name="Distrito" id="Distrito" onchange="ObtieneRegiones('Distritoe');">
+                                            <select class="single-select" name="Distrito" id="Distrito" onchange="ObtieneRegiones('Distrito');">
                                                 @foreach ($dist as $d)
                                                     <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>
                                                 @endforeach
@@ -465,11 +433,11 @@
                                         </div>
                                         <div class="col-xl-3">
                                             <label for="form" class="form-label">Tiempo EESS a Localidad</label>
-                                            <input type="number" value="0" class="form-control form-control-sm" name="TiempoEESSLocalidad" id="TiempoEESSLocalidad">
+                                            <input type="number" value="0" step="0.01" class="form-control" name="TiempoEESSLocalidad" id="TiempoEESSLocalidad">
                                         </div>
                                         <div class="col-xl-3">
                                             <label for="form" class="form-label">Tiempo Localidad a EESS</label>
-                                            <input type="number" value="0" class="form-control form-control-sm" name="TiempoLocalidadEESS" id="TiempoLocalidadEESS">
+                                            <input type="number" value="0" step="0.01" class="form-control" name="TiempoLocalidadEESS" id="TiempoLocalidadEESS">
                                         </div>
                                         <div class="col-xl-3">
                                             <label for="form" class="form-label">M. Transporte mas Usado</label>
@@ -535,9 +503,45 @@
                 </form>
             
         </div>
+
+        <form id="formAgregaACS">
+            @csrf
+            <div class="modal fade" id="formAgregaACSModal" aria-hidden="true" style="z-index: 5000">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Registrar ACS</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="col-sm-12">
+                                <label for="" class="form-label">DNI</label>
+                                
+                                <input type="text" class="form-control" id="dni_tcs"name="dni_tcs" aria-describedby="validationServer05Feedback" required>
+								<div id="validationServer05Feedback" class="invalid-feedback">El N° Documento ya existe.</div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control formm-control-sm" id="nombre_tcs" name="nombre_tcs">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn-sm btn-warning btnGuardarACS">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
 @endsection
 @section('script_table_ajax')
     <script>
+        $(document).on("click",".btnGuardarACS",function(){
+            CargarACS();
+        });
+
         $("#dni_tcs").keyup(function(){
             $.ajax({
                 type: "GET",
@@ -546,15 +550,15 @@
                 success: function (response) {
                     if (response['estado']=='No_Disponible') {
                         $("#dni_tcs").addClass('is-invalid');
+                        $(".btnGuardarACS").hide();
                     }else{
                         $("#dni_tcs").removeClass('is-invalid');
+                        $(".btnGuardarACS").show();
                     }
                 }
             });
         });
-
-        $("#formAgregaACS").submit(function(e){
-            e.preventDefault(); 
+        function CargarACS(){
             var serializedData = $("#formAgregaACS").serialize();
             $.ajax({
                 type: "POST",
@@ -562,19 +566,23 @@
                 data: serializedData,
                 dataType: "json",
                 success: function (response) {
-                    round_success_noti("Registro Guardado");
+                    round_success_noti("ACS Registrado");
                     $.ajax({
                         type: "GET",
                         url: "ListaTCSjson",
                         dataType: "json",
                         success: function (response) {
+                            $("#NombreTCS1").empty();
                             $("#NombreTCS1e").empty();
                             $.each(response, function (key, item){
                                 if ((item.dni_tcs)==$("#dni_tcs").val()) {
-                                    $("#NombreTCS1e").append('<option selected value=' + item.dni_tcs + '>'+item.nombre_tcs+'</option>');    
+                                    $("#NombreTCS1").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#NombreTCS1e").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
                                 }else{
-                                    $("#NombreTCS1e").append('<option value=' + item.dni_tcs + '>'+item.nombre_tcs+'</option>');    
+                                    $("#NombreTCS1").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#NombreTCS1e").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');    
                                 }
+                                
                             });  
                         }
                     });
@@ -585,6 +593,11 @@
                 
             });
             $("#formAgregaACSModal").modal('hide');
+        }
+
+        $("#formAgregaACS").submit(function(e){
+            e.preventDefault(); 
+            CargarACS();
         });
 
         $(document).on("click",".btnAgregarACS",function(){

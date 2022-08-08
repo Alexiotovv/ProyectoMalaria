@@ -124,6 +124,7 @@ class FormMonitoreoUsoMosqController extends Controller
         $obj->VecesLavadoMosquitero=request('VecesLavadoMosquiteroe');
         $obj->FrecuenciaLavadoMosquitero=request('FrecuenciaLavadoMosquiteroe');
         $obj->ReaccionMolestia=request('ReaccionMolestiae');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $data=['mensaje'=>'Actualizado'];
         return response()->json($data);
@@ -192,17 +193,26 @@ class FormMonitoreoUsoMosqController extends Controller
         $obj->VecesLavadoMosquitero=request('VecesLavadoMosquitero');
         $obj->FrecuenciaLavadoMosquitero=request('FrecuenciaLavadoMosquitero');
         $obj->ReaccionMolestia=request('ReaccionMolestia');
+        $obj->user=auth()->user()->name;
         $obj->save();
         return response()->json($cod);
     }
     public function ListarMonitoreoMosquiteros()
     {
+        $nombre='%';
+        if (auth()->user()->is_admin) {
+            $nombre='%';
+        }else{
+            $nombre=auth()->user()->name;
+        }
+
         $lista=DB::table('form_monitoreo_uso_mosqs')
         ->leftjoin('dptos','dptos.id','=','form_monitoreo_uso_mosqs.Departamento')
         ->leftjoin('provs','provs.id','=','form_monitoreo_uso_mosqs.Provincia')
         ->leftjoin('dists','dists.id','=','form_monitoreo_uso_mosqs.Distrito')
         ->select('form_monitoreo_uso_mosqs.*','form_monitoreo_uso_mosqs.id as MonitoreoMosquiteroId',
         'dptos.nombre_dpto','provs.nombre_prov','dists.nombre_dist')
+        ->where('form_monitoreo_uso_mosqs.user','like',$nombre)
         ->get();
         return datatables()->of($lista)->toJson();
     }

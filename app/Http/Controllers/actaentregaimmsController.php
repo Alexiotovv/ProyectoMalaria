@@ -29,15 +29,23 @@ class actaentregaimmsController extends Controller
         $tcs=DB::table('tcs')->get();
 
         return view('acta_registrar_imm',
-        ['dpto'=>$dpto,'prov'=>$prov,'dist'=>$dist]);
+        ['dpto'=>$dpto,'prov'=>$prov,'dist'=>$dist,'tcs'=>$tcs]);
     }
 
     public function ListarActaEntregaIMM(){
+        $nombre='%';
+        if (auth()->user()->is_admin) {
+            $nombre='%';
+        }else{
+            $nombre=auth()->user()->name;
+        }
+
         $actas_entrega_imm = actaentregaimms::
         leftjoin('dptos','dptos.id','=','actaentregaimms.DepartamentoId')
         ->leftjoin('provs','provs.id','=','actaentregaimms.ProvinciaId')
         ->leftjoin('dists','dists.id','=','actaentregaimms.DistritoId')
         ->select('actaentregaimms.id as idacta','actaentregaimms.*','dptos.*','provs.*','dists.*','dptos.id as iddpto','provs.id as idprov','dists.id as iddist')
+        ->where('actaentregaimms.user','like',$nombre)
         ->get();
 
         return datatables()->of($actas_entrega_imm)->toJson();
@@ -58,6 +66,7 @@ class actaentregaimmsController extends Controller
         $obj->Cantidad=request('Cantidad');
         $obj->DNI=request('DNI');
         $obj->Fecha=request('Fecha');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $data=['Mensaje'=>'Actualizado'];
         return response()->json($data);
@@ -91,6 +100,7 @@ class actaentregaimmsController extends Controller
         $obj->Cantidad = request('editCantidad');
         $obj->DNI = request('editDNI');
         $obj->Fecha = request('editFecha');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $data=['Mensaje'=>'Actualizado'];
         return response()->json($data);

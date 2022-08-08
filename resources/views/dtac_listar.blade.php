@@ -55,8 +55,8 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label for="">CÓDIGO DE FICHA:</label>
-                                    <input type="text" class="form-control form-control-sm" id="codigo_ficha">
-                                    <input type="text" class="form-control form-control-sm" name="idFicha" id="idFicha"  hidden>
+                                    <input type="text" class="form-control form-control-sm" id="codigo_ficha" readonly>
+                                    <input type="text" class="form-control form-control-sm" name="idFicha" id="idFicha" hidden>
                                 </div>
                             </div>
                             
@@ -73,6 +73,7 @@
                                             <th>Edad</th>
                                             <th>Género</th>
                                             <th>Gestante</th>
+                                            <th>Etnia</th>
                                             <th>I.Síntomas</th>
                                             <th>L.P.Infección</th>
                                             <th>N/R</th>
@@ -105,56 +106,65 @@
                         <div class="modal-body">
                             <div class="col-lg-3">
                                 <label for="" class="form-label">Id Ficha</label>
-                                <input type="text" class="form-control form-control-sm" name="idFichaPaciente" id="idFichaPaciente" value="0" readonly>
+                                <input type="text" class="form-control" name="idFichaPaciente" id="idFichaPaciente" value="0" readonly>
                             </div>
                             <div class="row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">DNI</label>
-                                    <input type="number" class="form-control form-control-sm" name="dni_paciente" id="dni_paciente">
+                                    <input type="number" class="form-control" name="dni_paciente" id="dni_paciente">
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control form-control-sm" name="nombre_paciente" id="nombre_paciente" required>
+                                    <input type="text" class="form-control" name="nombre_paciente" id="nombre_paciente" required>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-5">
                                     <label for="form" class="form-label">Apellidos</label>
-                                    <input type="text" class="form-control form-control-sm" name="apellido_paciente" id="apellido_paciente" required>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="form" class="form-label">Edad</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="edad_paciente" id="edad_paciente" required>
+                                    <input type="text" class="form-control" name="apellido_paciente" id="apellido_paciente" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-3">
+                                    <label for="form" class="form-label">Edad</label>
+                                    <input type="number" step="0.01" class="form-control" name="edad_paciente" id="edad_paciente" required>
+                                </div>
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">Género</label>
-                                    <select name="genero" id="genero" class="form-select form-select-sm">
+                                    <select name="genero" id="genero" class="form-select">
                                         <option value="H">HOMBRE</option>
                                         <option value="M">MUJER</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">Gestante</label>
-                                    <div class="form-check">
-                                        <select name="gestante" id="gestante" class="form-select form-select-sm">
-                                            <option value="0">NO</option>
-                                            <option value="1">SI</option>
-                                        </select>
-                                        Si/No      
-                                    </div>
+                                    <select name="gestante" id="gestante" class="form-select">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
+                                    </select>    
                                 </div>
                                 <div class="col-lg-3">
+                                    <label for="form" class="form-label">Etnia</label>
+                                    <select name="etnia" id="etnia" class="single-select">
+                                        @foreach ($etnia as $e)
+                                            <option value="{{$e->Descripcion_Etnia}}">{{$e->Descripcion_Etnia}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">Inicio Síntomas</label>
-                                    <input type="date" class="form-control form-control-sm" name="inicio_sintomas" id="inicio_sintomas">
+                                    <input type="date" class="form-control" name="inicio_sintomas" id="inicio_sintomas">
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">Lugar Prob. de Infec.</label>
-                                    <input type="text" class="form-control form-control-sm" name="lugar_infeccion" id="lugar_infeccion">
+                                    <input type="text" class="form-control" name="lugar_infeccion" id="lugar_infeccion">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">Nuevo Repetidor</label>
-                                    <select name="nuevo_repetidor" id="nuevo_repetidor" class="form-select form-select-sm">
+                                    <select name="nuevo_repetidor" id="nuevo_repetidor" class="form-select">
                                         <option value="N">NUEVO</option>
                                         <option value="R">REPETIDOR</option>
                                     </select>
@@ -184,64 +194,72 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label for="" class="form-label">Id Paciente</label>
-                                    <input type="text" class="form-control form-control-sm" name="EditidPaciente" id="EditidPaciente" value="0" readonly>
+                                    <input type="text" class="form-control" name="EditidPaciente" id="EditidPaciente" value="0" readonly>
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="" class="form-label">Id Ficha</label>
-                                    <input type="text" class="form-control form-control-sm" name="EditidFichaPaciente" id="EditidFichaPaciente" value="0" readonly>
+                                    <input type="text" class="form-control" name="EditidFichaPaciente" id="EditidFichaPaciente" value="0" readonly>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">DNI</label>
-                                    <input type="number" class="form-control form-control-sm" name="Editdni_paciente" id="Editdni_paciente" >
+                                    <input type="number" class="form-control" name="Editdni_paciente" id="Editdni_paciente" >
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="form" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control form-control-sm" name="Editnombre_paciente" id="Editnombre_paciente" required>
+                                    <input type="text" class="form-control" name="Editnombre_paciente" id="Editnombre_paciente" required>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-5">
                                     <label for="form" class="form-label">Apellidos</label>
-                                    <input type="text" class="form-control form-control-sm" name="Editapellido_paciente" id="Editapellido_paciente" required>
+                                    <input type="text" class="form-control" name="Editapellido_paciente" id="Editapellido_paciente" required>
                                 </div>
-                                <div class="col-lg-2">
-                                    <label for="form" class="form-label">Edad</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Editedad_paciente" id="Editedad_paciente" required>
-                                </div>
+                                
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-3">
+                                    <label for="form" class="form-label">Edad</label>
+                                    <input type="number" step="0.01" class="form-control" name="Editedad_paciente" id="Editedad_paciente" required>
+                                </div>
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">Género</label>
-                                    <select name="Editgenero" id="Editgenero" class="form-select form-select-sm">
+                                    <select name="Editgenero" id="Editgenero" class="form-select">
                                         <option value="H">HOMBRE</option>
                                         <option value="M">MUJER</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <label for="form" class="form-label">Gestante</label>
-                                    <div class="form-check">
-                                        <select name="Editgestante" id="Editgestante" class="form-select form-select-sm">
-                                            <option value="0">NO</option>
-                                            <option value="1">SI</option>
-                                        </select>
-                                        Si/No      
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="form" class="form-label">Inicio Síntomas</label>
-                                    <input type="date" class="form-control form-control-sm" name="Editinicio_sintomas" id="Editinicio_sintomas">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Lugar Prob. de Infec.</label>
-                                    <input type="text" class="form-control form-control-sm" name="Editlugar_infeccion" id="Editlugar_infeccion">
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="form" class="form-label">Nuevo Repetidor</label>
-                                    <select name="Editnuevo_repetidor" id="Editnuevo_repetidor" class="form-select form-select-sm">
-                                        <option value="N">NUEVO</option>
-                                        <option value="R">REPETIDOR</option>
+                                    <select name="Editgestante" id="Editgestante" class="form-select">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
                                     </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="form" class="form-label">Etnia</label>
+                                    <select name="etniae" id="etniae" class="single-select">
+                                        @foreach ($etnia as $e)
+                                            <option value="{{$e->Descripcion_Etnia}}">{{$e->Descripcion_Etnia}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label for="form" class="form-label">Inicio Síntomas</label>
+                                        <input type="date" class="form-control" name="Editinicio_sintomas" id="Editinicio_sintomas">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Lugar Prob. de Infec.</label>
+                                        <input type="text" class="form-control" name="Editlugar_infeccion" id="Editlugar_infeccion">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="form" class="form-label">Nuevo Repetidor</label>
+                                        <select name="Editnuevo_repetidor" id="Editnuevo_repetidor" class="form-select">
+                                            <option value="N">NUEVO</option>
+                                            <option value="R">REPETIDOR</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -396,7 +414,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Fecha Toma Muestra</label>
-                                    <input type="date" class="form-control form-control-sm" name="editFechaToma" id="editFechaToma" value="1900-01-01">
+                                    <input type="date" class="form-control" name="editFechaToma" id="editFechaToma" value="1900-01-01">
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Resultado Prueba</label>
@@ -434,28 +452,28 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label for="">Id Paciente</label>
-                                    <input type="text" class="form-control form-control-sm" name="idResultadoPaciente" id="idResultadoPaciente" readonly>
+                                    <input type="text" class="form-control" name="idResultadoPaciente" id="idResultadoPaciente" readonly>
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Nombre de Prueba</label>
-                                    <select class="form-select form-select-sm" name="nombre_prueba" id="nombre_prueba">
+                                    <select class="form-select" name="nombre_prueba" id="nombre_prueba">
                                         <option value="PR-GG">PRUEBA RAPIDA GG</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Fecha Toma Muestra</label>
-                                    <input type="date" class="form-control form-control-sm" name="FechaToma" id="FechaToma" value="1900-01-01">
+                                    <input type="date" class="form-control" name="FechaToma" id="FechaToma" value="1900-01-01">
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Resultado Prueba</label>
-                                    <select class="form-select form-select-sm" name="resultado" id="resultado">
+                                    <select class="form-select" name="resultado" id="resultado">
                                         <option value="NEG-GG">NEGATIVO GG</option>
                                         <option value="POS-GG">POSITIVO GG</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Fecha Resultado</label>
-                                    <input type="date" class="form-control form-control-sm" name="FechaResultado" id="FechaResultado" value="1900-01-01">
+                                    <input type="date" class="form-control" name="FechaResultado" id="FechaResultado" value="1900-01-01">
                                 </div>
                             </div>
                         </div>
@@ -481,7 +499,7 @@
                             <div class="row">
                                 <div class="col-xl-3">
                                     <label for="form" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control form-control-sm" name="fecha" id="fecha">
+                                    <input type="date" class="form-control" name="fecha" id="fecha">
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="form" class="form-label">Departamento</label>
@@ -523,11 +541,11 @@
                             <div class="row">
                                 <div class="col-6">
                                     <label for="" class="form-label">Comunidad</label>
-                                    <input type="text" class="form-control form-control-sm" name="Comunidad" id="Comunidad">
+                                    <input type="text" class="form-control" name="Comunidad" id="Comunidad">
                                 </div>
                                 <div class="col-6">
                                     <label for="form" class="form-label">Nombre del Promotor</label>
-                                    <input type="text" class="form-control form-control-sm" name="tcsId" id ="tcsId">
+                                    <input type="text" class="form-control" name="tcsId" id ="tcsId">
                                 </div>
                             </div>
 
@@ -561,7 +579,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="">Nombre Paciente</label>
-                                    <input type="text" class="form-control form-control-sm" id="medicamento_nombre_paciente" readonly>
+                                    <input type="text" class="form-control" id="medicamento_nombre_paciente" readonly>
                                 </div>
                             </div>
 
@@ -935,6 +953,7 @@
                     {data:"edad"},
                     {data:"sexo"},
                     {data:"gestante"},
+                    {data:"etnia"},
                     {data:"inicio_sintomas"},
                     {data:"lugar_probable_infeccion"},
                     {data:"nuevo_repetidor"}
@@ -970,6 +989,7 @@
                     $("#Editedad_paciente").val(response[0].edad);
                     $("#Editgenero").val(response[0].sexo).change();
                     $("#Editgestante").val(response[0].gestante).change();
+                    $("#etniae").val(response[0].etnia).change();
                     $("#Editinicio_sintomas").val(response[0].inicio_sintomas);
                     $("#Editlugar_infeccion").val(response[0].lugar_probable_infeccion);
                     $("#Editnuevo_repetidor").val(response[0].nuevo_repetidor).change();
@@ -1145,6 +1165,8 @@
     });
     var fecha = new Date();
     document.getElementById("fecha").value = fecha.toJSON().slice(0,10);
+    document.getElementById("inicio_sintomas").value = fecha.toJSON().slice(0,10);
+    
 </script>
 @endsection
 

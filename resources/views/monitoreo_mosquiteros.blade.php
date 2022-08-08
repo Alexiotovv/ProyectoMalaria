@@ -7,6 +7,7 @@
                 <button type="button" class="btn-sm btn-primary btnNuevoMonitoreoMosquiteros" data-bs-toggle="modal">
                     <i class="lni lni-circle-plus"></i>Registrar Monitoreo
                 </button>
+
             </div>
         </div>
         <div class="card">
@@ -70,7 +71,7 @@
                             <input type="number" name="NumeroMonitoreoe" id="NumeroMonitoreoe" class="form-control form-control-sm" value="0">
                         </div>
 
-                        <label for="" style="width: 100%;"><strong>A. UBICACIÓN E IDENTIFICACÓN DEL ENTREVITASDO(Jefe de Hogar)</strong></label> 
+                        <label for="" style="width: 100%;"><strong>A. UBICACIÓN E IDENTIFICACÓN DEL ENTREVITASDO(Jefe de Hogar)</strong></label>
                         <div class="col-xl-6">
                             <div class="row">
                                 <div class="col-xl-4">
@@ -79,7 +80,7 @@
                                 <div class="col-xl-6">
                                     <select class="form-select form-select-sm" name="Departamentoe" id="Departamentoe" disabled>
                                         @foreach ($dpto as $d)
-                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
+                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -91,19 +92,19 @@
                                 <div class="col-xl-6">
                                     <select name="Provinciae" id="Provinciae" class="form-select form-select-sm" disabled>
                                         @foreach ($prov as $p)
-                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
+                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xl-4">
-                                    <label for="form" class="form-label">Distrito</label>        
+                                    <label for="form" class="form-label">Distrito</label>
                                 </div>
                                 <div class="col-xl-6">
                                     <select name="Distritoe" id="Distritoe" class="single-select" onchange="ObtieneRegiones('Distritoe');">
                                         @foreach ($dist as $d)
-                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
+                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -153,7 +154,7 @@
                                     <input type="number" name="Edade" id="Edade" step="0.1" value="1.00" class="form-control form-control-sm">
                                 </div>
                             </div>
-                        </div>         
+                        </div>
                     </div>
                     <br>
                     <div class="row">
@@ -195,7 +196,7 @@
                                     <input type="number" name="TotalMosqImpregnadose" id="TotalMosqImpregnadose" class="form-control form-control-sm" >
                                 </div>
                             </div>
-                        </div>                   
+                        </div>
                     </div>
                     <br>
                     <div class="row">
@@ -475,12 +476,12 @@
                                     <option value="SI">SI</option>
                                 </select>
                             </div>
-                            
+
                         </div>
                     </div>
 
                 </div>
-                
+
                 <div class="modal-footer">
                     <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn-sm btn-warning">Actualizar</button>
@@ -523,7 +524,7 @@
                             <input type="number" name="NumeroMonitoreo" id="NumeroMonitoreo" class="form-control form-control-sm" value="0">
                         </div>
 
-                        <label for="" style="width: 100%;"><strong>A. UBICACIÓN E IDENTIFICACÓN DEL ENTREVITASDO(Jefe de Hogar)</strong></label> 
+                        <label for="" style="width: 100%;"><strong>A. UBICACIÓN E IDENTIFICACÓN DEL ENTREVITASDO(Jefe de Hogar)</strong></label>
                         <div class="col-xl-6">
                             <div class="row">
                                 <div class="col-xl-4">
@@ -532,7 +533,7 @@
                                 <div class="col-xl-6">
                                     <select class="form-select form-select-sm" name="Departamento" id="Departamento" disabled>
                                         @foreach ($dpto as $d)
-                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
+                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -544,19 +545,19 @@
                                 <div class="col-xl-6">
                                     <select name="Provincia" id="Provincia" class="form-select form-select-sm" disabled>
                                         @foreach ($prov as $p)
-                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
+                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xl-4">
-                                    <label for="form" class="form-label">Distrito</label>        
+                                    <label for="form" class="form-label">Distrito</label>
                                 </div>
                                 <div class="col-xl-6">
                                     <select name="Distrito" id="Distrito" class="single-select" onchange="ObtieneRegiones('Distrito');">
                                         @foreach ($dist as $d)
-                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
+                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -606,7 +607,7 @@
                                     <input type="number" name="Edad" id="Edad" step="0.1" value="1.00" class="form-control form-control-sm">
                                 </div>
                             </div>
-                        </div>         
+                        </div>
                     </div>
                     <br>
                     <div class="row">
@@ -648,7 +649,7 @@
                                     <input type="number" name="TotalMosqImpregnados" id="TotalMosqImpregnados" class="form-control form-control-sm" >
                                 </div>
                             </div>
-                        </div>                   
+                        </div>
                     </div>
                     <br>
                     <div class="row">
@@ -928,12 +929,12 @@
                                     <option value="SI">SI</option>
                                 </select>
                             </div>
-                            
+
                         </div>
                     </div>
 
                 </div>
-                
+
                 <div class="modal-footer">
                     <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn-sm btn-warning">Guardar</button>
@@ -952,7 +953,7 @@
                     <h5>Lista de Reacciones Adversas en Personas</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-4">
@@ -980,7 +981,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-        
+
                                 </tbody>
                             </table>
                             </div>
@@ -1001,7 +1002,7 @@
                     <h5>Registrar Reacción Adversa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-2">
@@ -1023,7 +1024,7 @@
                                 <option value="M">MUJER</option>
                             </select>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-lg-3">
@@ -1075,7 +1076,7 @@
                     <h5>Editar Reacción Adversa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-2">
@@ -1097,7 +1098,7 @@
                                 <option value="M">MUJER</option>
                             </select>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-lg-3">
@@ -1146,6 +1147,8 @@
 
 @section('script_table')
     <script>
+        
+
         $("#formEditarReaccionAdversa").submit(function(e){
             e.preventDefault();
             var serializedData = $("#formEditarReaccionAdversa").serialize();
@@ -1221,14 +1224,14 @@
                 "ajax": "ListarReaccionesAdversas/"+id,
                 "method":'GET',
                 "columns":[
-                    {data:"ReaccionesAdversasId"},   
+                    {data:"ReaccionesAdversasId"},
                     {"defaultContent":
                     "<button class='btn-warning btn-sm btnEditarReaccion'><i class='lni lni-pencil'></i></button>"
                     },
                     {data:"Nombre"},
                     {data:"Edad"},
                     {data:"Genero"},
-                    {data:"MolestiaPresentada"}, 
+                    {data:"MolestiaPresentada"},
                     {data:"TiempoInicioMolestias"},
                     {data:"Evolucion1"},
                     {data:"Evolucion2"}
@@ -1322,7 +1325,7 @@
                 }
             });
             $("#EditarMoniteroMosquiteroModal").modal('show');
-        }); 
+        });
 
         $("#formMoniteroMosquitero").submit(function(e){
             e.preventDefault();
@@ -1335,7 +1338,7 @@
                 data: serializedData,
                 dataType: "json",
                 success: function (response) {
-                    $('#ListarMonitoreoMosquiteros').DataTable().ajax.reload();   
+                    $('#ListarMonitoreoMosquiteros').DataTable().ajax.reload();
                     round_success_noti("Registro Guardado");
                 },
                 error: function (response) {
@@ -1356,7 +1359,7 @@
             "ajax": "ListarMonitoreoMosquiteros",
             "method":'GET',
             "columns":[
-                {data:"MonitoreoMosquiteroId"},   
+                {data:"MonitoreoMosquiteroId"},
                 {data:"Codigo"},
                 {"defaultContent":
                 "<button class='btn-warning btn-sm btnEditar'><i class='lni lni-pencil'></i></button>\
@@ -1365,7 +1368,7 @@
                 {data:"nombre_dpto"},
                 {data:"nombre_prov"},
                 {data:"nombre_dist"},
-                {data:"Localidad"}, 
+                {data:"Localidad"},
                 {data:"Nombres"},
                 {data:"Apellidos"},
                 {data:"Genero"},
@@ -1379,17 +1382,17 @@
 
 @section('script_table_ajax')
 <script>
-    
+
 </script>
 
 <script>
-    function ObtieneRegiones(dist) { 
+    function ObtieneRegiones(dist) {
           $.ajax({
               url:"ListarRegiones/" + $("#"+dist+"").val(),
               method:"GET",
               dataType:"json",
               success: function (response) {
-                  $.each(response.lista_regiones, function (key, item) { 
+                  $.each(response.lista_regiones, function (key, item) {
                       if ((item.distId)==($("#"+dist+"").val())) {
                           $("#Departamento").val(item.dptoId).change();
                           $("#Provincia").val(item.provId).change();

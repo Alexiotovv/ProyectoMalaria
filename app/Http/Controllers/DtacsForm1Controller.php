@@ -27,7 +27,7 @@ class DtacsForm1Controller extends Controller
         ->select('dtacpacientes.id as PacienteId',
         'dtacpacientes.dni','dtacpacientes.nombres','dtacpacientes.apellidos','dtacpacientes.edad',
         'dtacpacientes.sexo','dtacpacientes.gestante','dtacpacientes.inicio_sintomas',
-        'dtacpacientes.lugar_probable_infeccion','dtacpacientes.nuevo_repetidor')
+        'dtacpacientes.lugar_probable_infeccion','dtacpacientes.nuevo_repetidor','dtacpacientes.etnia')
         ->where('dtacpacientes.formdtacpacienteId','=',$id)
         ->get();
         
@@ -63,6 +63,7 @@ class DtacsForm1Controller extends Controller
         $obj->edad=request('edad_paciente');
         $obj->sexo=request('genero');
         $obj->gestante=request('gestante');
+        $obj->etnia=request('etnia');
         $obj->inicio_sintomas=request('inicio_sintomas');
         $obj->lugar_probable_infeccion=request('lugar_infeccion');
         $obj->nuevo_repetidor=request('nuevo_repetidor');
@@ -99,8 +100,12 @@ class DtacsForm1Controller extends Controller
         ->where('dptos.nombre_dpto','=','LORETO')
         ->get();
 
+        $etnia=DB::table('maestro_his_etnia')
+        ->select('maestro_his_etnia.*')
+        ->get();
+
         return view ('dtac_listar',['lista_dtac'=>$lista_dtac,
-        'dpto'=>$dpto,'prov'=>$prov,'dist'=>$dist]);
+        'dpto'=>$dpto,'prov'=>$prov,'dist'=>$dist,'etnia'=>$etnia]);
     }
 
     public function ListaRegiones($id)
@@ -122,10 +127,10 @@ class DtacsForm1Controller extends Controller
         $ultimo = DB::table('dtacs_form1s')->select("id")->latest()->first();
         $idcod=0;
         if ($ultimo){
-            $idcod=$ultimo->id;
-            $codigo='TD'.$fecha->format('dmy'.'-'.$idcod);            
+            $idcod=$ultimo->id+1;
+            $codigo='TD-'.$idcod;            
         }else{
-            $codigo='TD'.$fecha->format('dmy'.'-'."1");
+            $codigo='TD'."1";
         }
         
         $obj= new dtacsForm1();
@@ -184,6 +189,7 @@ class DtacsForm1Controller extends Controller
         $obj->edad=request('Editedad_paciente');
         $obj->sexo=request('Editgenero');
         $obj->gestante=request('Editgestante');
+        $obj->etnia=request('etniae');
         $obj->inicio_sintomas=request('Editinicio_sintomas');
         $obj->lugar_probable_infeccion=request('Editlugar_infeccion');
         $obj->nuevo_repetidor=request('Editnuevo_repetidor');

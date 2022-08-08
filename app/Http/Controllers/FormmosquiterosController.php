@@ -10,7 +10,29 @@ use Carbon\Carbon;
 
 class FormmosquiterosController extends Controller
 {
+  public function ActualizaEntregaMosq(Request $request)
+  {
+      $id = request('idEntregaPersonae');
+      $obj = formlistaentregamosq::findOrFail($id);
+      $obj->doble=request('doblee');
+      $obj->familiar1=request('familiar1e');
+      $obj->familiar2=request('familiar2e');
+      $obj->personas_usaran=request('nro_personase');
+      $obj->nro_afiches=request('nro_afichese');
+      $obj->save();
+      $data=['mensaje'=>'Guardado'];
+      return response()->json($data);
+  }
   
+  public function EditarEntregaMosq($id)
+  {
+    $lista=DB::table('formlistaentregamosqs')
+      ->select('formlistaentregamosqs.*')
+      ->where('formlistaentregamosqs.id','=',$id)
+      ->get();
+      return response()->json($lista);
+  }
+
   function GuardarEntregaMosquitero(Request $request)
   {
     $obj = new formlistaentregamosq();
@@ -97,6 +119,7 @@ class FormmosquiterosController extends Controller
     $obj->eess_cercano_microscopio=request('eeess_cercano_microscopio');
     $obj->tiempo_eesscercano_microscopio=request('etiempo_eesscercano_microscopio');
     $obj->Responsable=request('eresponsable');
+    $obj->user=auth()->user()->name;
     $obj->save();
     $data=['mensaje'=>'Actualizado'];
     return response()->json($data);
@@ -137,6 +160,7 @@ class FormmosquiterosController extends Controller
         $obj->eess_cercano_microscopio=request('eess_cercano_microscopio');
         $obj->tiempo_eesscercano_microscopio=request('tiempo_eesscercano_microscopio');
         $obj->Responsable=request('responsable');
+        $obj->user=auth()->user()->name;
         $obj->save();
         return response()->json($codigo);
         // return redirect()->route('Mosquiteros');
@@ -144,12 +168,20 @@ class FormmosquiterosController extends Controller
 
     public function ListarMosquiteros()
     {
+      $nombre='%';
+        if (auth()->user()->is_admin) {
+            $nombre='%';
+        }else{
+            $nombre=auth()->user()->name;
+        }
+
       $lista=DB::table('formmosquiteros')
       ->leftjoin('dptos','dptos.id','=','formmosquiteros.Departamento')
       ->leftjoin('provs','provs.id','=','formmosquiteros.Provincia')
       ->leftjoin('dists','dists.id','=','formmosquiteros.Distrito')
       ->select('formmosquiteros.id as mosquiteroId','formmosquiteros.*',
       'dptos.*','provs.*','dists.*')
+      ->where('formmosquiteros.user','like',$nombre)
       ->get();
       return datatables()->of($lista)->toJson();
     }

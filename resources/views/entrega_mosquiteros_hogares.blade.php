@@ -274,7 +274,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Registrar Persona de Hogar</h5>
+                    <h5>Registrar Persona de Hogar y Censo antes de Entrega</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -299,34 +299,72 @@
                     </div>
                     <div class="row">
                         
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Tamaño Mosqu.NoImp.</label>
-                            <select name="tamanomos_noimp" id="tamanomos_noimp" class="form-select form-select-sm">
-                                <option value="P">PERSONAL</option>
-                                <option value="F">FAMILIAR</option>
-                            </select>
+                        <div class="col-lg-6">
+                            <hr>
+                            <label for="" class="form-label">Censo Antes de Entrega NO IMPREGNADOS</label>
+                            
+                            <div class="row">                            
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">cantidad</label>
+                                    <select name="tamanomos_noimp" id="tamanomos_noimp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">Estado Mosqu.NoImp.</label>
+                                    <select name="estadomos_noimp" id="estadomos_noimp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="B">BUEN ESTADO</option>
+                                        <option value="M">MAL ESTADO</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Estado Mosqu.NoImp.</label>
-                            <select name="estadomos_noimp" id="estadomos_noimp" class="form-select form-select-sm">
-                                <option value="B">BUEN ESTADO</option>
-                                <option value="M">MAL ESTADO</option>
-                            </select>
+                        
+                        <div class="col-lg-6">
+                            <hr>
+                            <label for="" class="form-label">Censo Antes de Entrega IMPREGNADOS</label>
+                            
+                            <div class="row">                            
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">Cantidad</label>
+                                    <select name="tamanomos_imp" id="tamanomos_imp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">Estado Mosqu.Imp.</label>
+                                    <select name="estadomos_imp" id="estadomos_imp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="B">BUEN ESTADO</option>
+                                        <option value="M">MAL ESTADO</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Tamaño Mosqu.Imp.</label>
-                            <select name="tamanomos_imp" id="tamanomos_imp" class="form-select form-select-sm">
-                                <option value="P">PERSONAL</option>
-                                <option value="D">DOBLE</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Estado Mosqu.Imp.</label>
-                            <select name="estadomos_imp" id="estadomos_imp" class="form-select form-select-sm">
-                                <option value="B">BUEN ESTADO</option>
-                                <option value="M">MAL ESTADO</option>
-                            </select>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -370,29 +408,51 @@
                     <div class="row">
                         
                         <div class="col-lg-3">
-                            <label for="form" class="form-label">Tamaño Mosqu.NoImp.</label>
+                            <label for="form" class="form-label">Cantidad</label>
                             <select name="etamanomos_noimp" id="etamanomos_noimp" class="form-select form-select-sm">
-                                <option value="P">PERSONAL</option>
-                                <option value="F">FAMILIAR</option>
+                                <option value="--">--</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
                             <label for="form" class="form-label">Estado Mosqu.NoImp.</label>
                             <select name="eestadomos_noimp" id="eestadomos_noimp" class="form-select form-select-sm">
+                                <option value="--">--</option>
                                 <option value="B">BUEN ESTADO</option>
                                 <option value="M">MAL ESTADO</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <label for="form" class="form-label">Tamaño Mosqu.Imp.</label>
+                            <label for="form" class="form-label">Cantidad</label>
                             <select name="etamanomos_imp" id="etamanomos_imp" class="form-select form-select-sm">
-                                <option value="P">PERSONAL</option>
-                                <option value="D">DOBLE</option>
+                                <option value="--">--</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
                             <label for="form" class="form-label">Estado Mosqu.Imp.</label>
                             <select name="eestadomos_imp" id="eestadomos_imp" class="form-select form-select-sm">
+                                <option value="--">--</option>
                                 <option value="B">BUEN ESTADO</option>
                                 <option value="M">MAL ESTADO</option>
                             </select>
@@ -474,16 +534,16 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <input type="text" id="idEntregaPersona" name="idEntregaPersona" hidden>
-                                    <label for="">Mosq.Doble(180x100x150)</label>
+                                    <label for="">PERSONAL(180x100x150)</label>
                                     <input type="number" name="doble" id="doble"class="form-control form-control-sm" value="0">
 
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="">Mosq.Familiar(180x130x150)</label>
+                                    <label for="">MEDIANO(180x130x150)</label>
                                     <input type="number" name="familiar1" id="familiar1" class="form-control form-control-sm" value="0">
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="">Mosq.Fam.Grande(180x160x150)</label>
+                                    <label for="">FAM. GRANDE(180x160x150)</label>
                                     <input type="number" name="familiar2" id="familiar2" class="form-control form-control-sm" value="0">
                                 </div>
                             </div>
@@ -509,11 +569,101 @@
     </div>
 </form>
 
+<form id="formEditarEntregaMosquitero">
+    @csrf
+    <div class="modal fade" id="EditarEntregaMosquiteroModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Editar Entrega de Mosquitero</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <input type="text" id="idEntregaPersonae" name="idEntregaPersonae" hidden>
+                                    <label for="">PERSONAL(180x100x150)</label>
+                                    <input type="number" name="doblee" id="doblee"class="form-control form-control-sm" value="0">
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="">MEDIANO(180x130x150)</label>
+                                    <input type="number" name="familiar1e" id="familiar1e" class="form-control form-control-sm" value="0">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="">FAM. GRANDE(180x160x150)</label>
+                                    <input type="number" name="familiar2e" id="familiar2e" class="form-control form-control-sm" value="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="">N°Pers.UtilizaránMosq.</label>
+                                    <input type="number" name="nro_personase" id="nro_personase" class="form-control form-control-sm" value="0">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="">N° Afiches de uso Entregadas</label>
+                                    <input type="number" name="nro_afichese" id="nro_afichese" class="form-control form-control-sm" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnActualizarEntregaMosq" class="btn-sm btn-warning">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @endsection
 
 @section('script_table')
     <script>
+
+        $("#btnActualizarEntregaMosq").click(function (){
+            var serializedData = $("#formEditarEntregaMosquitero").serialize();
+            $.ajax({
+                type: "POST",
+                url: "ActualizaEntregaMosq",
+                data: serializedData,
+                dataType: "json",
+                success: function (response) {    
+                    round_success_noti("Registro Actualizado");
+                    $('#ListarEntregaMosquitero').DataTable().ajax.reload();
+                },
+                error: function (response) {
+                    round_error_noti()
+                }
+            });
+            $("#EditarEntregaMosquiteroModal").modal('hide');
+        }); 
+
+        $(document).on("click",".btnEditarEntrega",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=parseInt((fila).find('td:eq(0)').text());
+            $.ajax({
+                type: "GET",
+                url: "EditarEntregaMosq/" + id,
+                dataType: "json",
+                success: function (response) {
+                    $("#idEntregaPersonae").val(response[0].id);
+                    $("#doblee").val(response[0].doble);
+                    $("#familiar1e").val(response[0].familiar1);
+                    $("#familiar2e").val(response[0].familiar2);
+                    $("#nro_personase").val(response[0].personas_usaran);
+                    $("#nro_afichese").val(response[0].nro_afiches);
+                    
+                }
+            });
+
+            $("#EditarEntregaMosquiteroModal").modal('show');
+        })
+
         $("#formGuardarEntregaMosquitero").submit(function(e){
             e.preventDefault();
             var serializedData = $("#formGuardarEntregaMosquitero").serialize();

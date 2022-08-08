@@ -64,7 +64,7 @@
 			<ul class="metismenu" id="menu">
 				
 				<li class="menu-label">REGISTROS</li>
-					
+{{-- 					
 					<li>
 						<a class="has-arrow" href="javascript:;">
 							<div class="parent-icon"><i class='bx bx-hourglass'></i>
@@ -72,27 +72,25 @@
 							<div class="menu-title">INTERVENCIONES</div>
 						</a>
 						<ul>
-							<li> <a href="{{url('Intervenciones')}}"><i class="bx bx-right-arrow-alt"></i>Intervenciones Contra la Malaria(Listas)</a>
-							</li>
+							
 							<li> <a href="formIntervencion"><i class="bx bx-right-arrow-alt"></i>Intervenciones Contra la Malaria(Formulario)</a>
 							</li>
 						</ul>
-					</li>
+					</li> --}}
 
 
-					<li>
+					{{-- <li>
 						<a class="has-arrow" href="javascript:;">
 							<div class="parent-icon"><i class='bx bx-hourglass'></i>
 							</div>
 							<div class="menu-title">SEGUIMIENTO ACS</div>
 						</a>
 						<ul>
-							<li> <a href="{{url('/Listar.formps/')}}"><i class="bx bx-right-arrow-alt"></i>Seguimiento del ACS(Listas)</a>
-							</li>
+							
 							<li> <a href="{{url('soloformseguiACS')}}"><i class="bx bx-right-arrow-alt"></i>Seguimiento del ACS(Formulario)</a>
 							</li>
 						</ul>
-					</li>
+					</li> --}}
 				
 				
 				<li class="menu-label">REGISTROS</li>
@@ -103,19 +101,27 @@
 							<div class="menu-title">Formatos</div>
 						</a>
 						<ul>
-							<li> <a class="disabled" style="background: rgb(211, 207, 207)" href="{{url('ActaEntregadeIMM')}}" class="disbaled"><i class="bx bx-right-arrow-alt"></i>Acta de Entrega de IMM y Otros Contra la Malaria</a>
-							</li>
-							<li> <a class="disabled" style="background: rgb(211, 207, 207)" href="{{url('AsistenciaTraCom')}}"><i class="bx bx-right-arrow-alt"></i>Asistencia Agentes Comunitarios de Salud</a>
+							<li> <a href="{{url('Intervenciones')}}"><i class="bx bx-right-arrow-alt"></i>Intervenciones Contra la Malaria</a>
 							</li>
 							
+							<li> <a href="{{url('/Listar.formps/')}}"><i class="bx bx-right-arrow-alt"></i>Seguimiento del ACS</a>
+							</li>
+
+							<li> <a href="{{url('ActaEntregadeIMM')}}"><i class="bx bx-right-arrow-alt"></i>Acta de Entrega de IMM y Otros Contra la Malaria</a>
+							</li>
+							<li> <a href="{{url('AsistenciaACS')}}"><i class="bx bx-right-arrow-alt"></i>Asistencia Capacitación ACS</a>
+							</li>
+							<li> <a href="{{url('AsistenciaTS')}}"><i class="bx bx-right-arrow-alt"></i>Asistencia Capacitación TS</a>
+							</li>
+							<li> <a href="{{url('/Listarformdtac/')}}"><i class="bx bx-right-arrow-alt"></i>Registro de Diagnóstico y Tratamiento de Casos de Malaria del ACS</a>
+							</li>
+							<li> <a href="{{url('Mosquiteros')}}"><i class="bx bx-right-arrow-alt"></i>Entrega de Mosquiteros en Hogares</a>
+							</li>
+							<li> <a href="{{url('MonitoreoMosquiteros')}}"><i class="bx bx-right-arrow-alt"></i>Monitoreo y Evaluacion del Uso de Mosquieros</a>
+							</li>
+							<li> <a href="{{url('MonitoEvaluUsoMosq')}}"><i class="bx bx-right-arrow-alt"></i>Monitoreo y Evaluacion del Uso de Mosquieros V2</a>
+							</li>
 							
-							<li> <a class="disabled" style="background: rgb(211, 207, 207)" href="{{url('/Listarformdtac/')}}"><i class="bx bx-right-arrow-alt"></i>Registro de Diagnóstico y Tratamiento de Casos de Malaria del ACS</a>
-							</li>
-							<li> <a class="disabled" style="background: rgb(211, 207, 207)" href="{{url('Mosquiteros')}}"><i class="bx bx-right-arrow-alt"></i>Entrega de Mosquiteros en Hogares</a>
-							</li>
-							
-							<li> <a class="disabled" style="background: rgb(211, 207, 207)" href="{{url('MonitoreoMosquiteros')}}"><i class="bx bx-right-arrow-alt"></i>Monitoreo y Evaluacion del Uso de Mosquieros</a>
-							</li>
 						</ul>
 					</li>
 					<li>
@@ -130,6 +136,10 @@
 						</ul>
 						<ul>
 							<li><a href="{{url ('Pruebas')}}"><i class="bx bx-right-arrow-alt"></i>Pruebas y Exámenes</a>
+							</li>
+						</ul>
+						<ul>
+							<li><a href="{{url ('Produccion')}}"><i class="bx bx-right-arrow-alt"></i>Producción</a>
 							</li>
 						</ul>
 					</li>

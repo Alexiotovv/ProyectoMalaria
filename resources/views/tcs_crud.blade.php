@@ -4,7 +4,7 @@
     <div class="page-content">
         <div class="col-sm-12">
             <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleSmallModal1">
-                <i class="lni lni-plus"></i>Nuevo Registro Trabajador Comunitario de Salud
+                <i class="lni lni-plus"></i>Nuevo Registro Agente Comunitario de Salud
             </button>
         </div>
         <br>
@@ -12,31 +12,16 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="example2"  class="table table-striped table-bordered" >
+                    <table id="ListaACS"  class="table table-striped table-bordered" >
                         <thead>
                             <tr>
                                 <th style="text-align: center;">Id</th>
-                                <th style="text-align: center;">DNI</th>
-                                <th style="text-align: center;">Nombre TCS</th>                              
-                                <th style="text-align: center;">Acciones</th>
+                                <th style="text-align: center;">Acción</th>
+                                <th style="text-align: center;">DNI</th>                              
+                                <th style="text-align: center;">Nombre</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lista_tcs as $tcs)
-                                <tr>                    
-                                    <td>{{$tcs->id}} <input type="hidden" id="hid{{$tcs->id}}" value="{{$tcs->id}}"></td>
-                                    <td>{{$tcs->dni_tcs}}<input hidden id="hdni_tcs{{$tcs->dni_tcs}}"></td>
-                                    <td>{{$tcs->nombre_tcs}}<input hidden id="hnombre_tcs{{$tcs->nombre_tcs}}"></td>
-                                    <td style="vertical-align: middle;">
-                                        <button class="btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleSmallModal2" onclick="EditarTCS({{$tcs->id}})">
-                                        <i class="lni lni-pencil"></i>
-                                        </button>
-                                        <button class="btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#exampleSmallModal3"  onclick="">
-                                            <i class="lni lni-cross-circle"></i>
-                                        </button>
-                                    </td>
-                                    </tr>
-                            @endforeach 
                         </tbody>
                     </table>
                 </div>
@@ -51,7 +36,7 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h6 class="modal-title">Registro de Asistencia de Trabajadores Comunitarios de Salud</h6>
+                            <h6 class="modal-title">Registro de Agente Comunitario de Salud</h6>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -62,7 +47,7 @@
                                     <label for="">DNI</label>
                                     <input name="dni" id="dni" type="text" class="form-control" value="-" maxlength="9">
 
-                                    <label for="">Nombre del TCS</label>
+                                    <label for="">Nombre del ACS</label>
                                     <input name="nombre" id="nombre" type="text" class="form-control" >
                                 </div>
                             </div>
@@ -78,43 +63,77 @@
 {{-- Cierra Registro de Asistencia Comunitarios de Salud --}}
 
  {{-- EDITA Asistencia Trabajadores Comunitarios de Salud --}}
- <form  action="tcs_editar" method="POST">
+ <form  id="formActualizarACS">
     @csrf
-    <div class="modal fade" id="exampleSmallModal2" data-bs-target="#exampleSamllModal2" aria-hidden="true">
+    <div class="modal fade" id="ActualizarACSModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title">Editar Asistencia de Trabajadores Comunitarios de Salud</h6>
+                    <h6 class="modal-title">Editar Agente Comunitario de Salud</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-body">
                         <div class="row">
                             <input name="id" id="id" type="text" value="-" hidden>
-                            <label for="">DNI</label>
-                            <input name="editdni" id="editdni" type="text" class="form-control" value="-" maxlength="9">
+                            <label for="" class="form-label">DNI</label>
+                            <input name="dni_tcs" id="dni_tcs" type="text" class="form-control" value="-" maxlength="9">
 
-                            <label for="">Nombre del TCS</label>
-                            <input name="editnombre" id="editnombre" type="text" class="form-control" >
+                            <label for="" class="form-label">Nombre del ACS</label>
+                            <input name="nombre_tcs" id="nombre_tcs" type="text" class="form-control" >
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                    <button type="button" class="btn-sm btn-warning btnActualizarACS">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
-{{-- Cierra EDITA de Asistencia Comunitarios de Salud --}}
-
         
 
 @endsection
 
 @section('script_table')
 <script>
+
+    $(document).on("click",".btnActualizarACS",function(){
+        var serializedData = $("#formActualizarACS").serialize();
+        $.ajax({
+            type: "POST",
+            url: "ActualizarACS",
+            data: serializedData,
+            dataType: "json",
+            success: function (response) {        
+                round_success_noti("Registro Actualizado");
+                $("#ListaACS").DataTable().ajax.reload();
+            },
+            error: function (response) {
+                round_error_noti();
+            }
+        });
+        $("#ActualizarACSModal").modal('hide')
+    });
+
+    $(document).on("click",".btnEditarACS",function(){
+        fila=$(this).closest("tr");
+        id=parseInt((fila).find('td:eq(0)').text());
+        $("#id").val(id);
+        $.ajax({
+            type: "GET",
+            url: "EditarTCS/"+id,
+            dataType: "json",
+            success: function (response) {
+                $("#dni_tcs").val(response[0].dni_tcs);
+                $("#nombre_tcs").val(response[0].nombre_tcs);
+                $("#ActualizarACSModal").modal('show')
+            }
+        });
+        
+    });
+
     $(document).ready(function() {
         var table = $('#example2').DataTable( {
             lengthChange: false,
@@ -125,6 +144,21 @@
         table.buttons().container()
             .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
     } );
+    
+    $("#ListaACS").DataTable({
+        "ajax": "ListaTCStable",
+        "method":'GET',
+        "columns":[
+            {data:"id"},
+            {"defaultContent":
+            "<button class='btn-warning btn-sm btnEditarACS'><i class='lni lni-pencil'></i></button>"},
+            {data:"dni_tcs"},
+            {data:"nombre_tcs"},
+            
+        ],
+        order:[0]
+    });
+
 </script>
 @endsection
 
