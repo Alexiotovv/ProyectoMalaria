@@ -12,9 +12,25 @@ use Carbon\Carbon;
 
 class FormintervencionesController extends Controller
 {   
+    public function EliminarActProgramada($id)
+    {
+        $obj=formacprogram::findOrFail($id);
+        $obj->delete();
+        $data=['Mensaje'=>'Listo'];
+        return response()->json($data);
+    }
+
     public function EliminarIntervencion($id)
     {
         $obj=formintervenciones::findOrFail($id);
+        $obj->delete=1;
+        $obj->save();
+        $data=['Mensaje'=>'Listo'];
+        return response()->json($data);
+    }
+    public function EliminarLocalidad($id)
+    {
+        $obj=formintlocalidad::findOrFail($id);
         $obj->delete();
         $data=['Mensaje'=>'Listo'];
         return response()->json($data);
@@ -253,6 +269,7 @@ class FormintervencionesController extends Controller
         ->select('formintervenciones.*','formintervenciones.id as IntervencionId','dptos.nombre_dpto',
         'provs.nombre_prov','dists.nombre_dist')
         ->where('formintervenciones.user','like',$nombre)
+        ->where('formintervenciones.delete','=',0)
         ->get();
         return datatables()->of($lista)->toJson();
     }

@@ -84,7 +84,10 @@
                         <form  id="formMonitoreo">
                             @csrf
                             <input type="text" id="idestadoform" name="idestadoform" hidden>
-                            <input type="text" id="idMonitoreo1" name="idMonitoreo1">
+                            <div class="col-xl-2">
+                                <input type="text" class="form-control" id="idMonitoreo1" name="idMonitoreo1" readonly>
+                            </div>
+                            
                             <div class="row">
                                 <div class="col-xl-2">
                                     <label for="form" class="form-label">Departamento</label>
@@ -151,12 +154,13 @@
                                     <input type="text" class="form-control" name="CargoResponsable" id="CargoResponsable">
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn-sm btn-warning btnGuardarMonitoreo">Guardar</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn-sm btn-warning btnGuardarMonitoreo">Guardar</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -200,7 +204,7 @@
                                             </div>
                                             <div class="col-xl-2">
                                                 <label for="form" class="form-label">N° de Personas Femenino</label>
-                                                <input type="number" class="form-control" name="NPersonasFemenino" id="DNPersonasFemenino">
+                                                <input type="number" class="form-control" name="NPersonasFemenino" id="NPersonasFemenino">
                                             </div>
                                             <div class="col-xl-2">
                                                 <label for="form" class="form-label">N° de Personas Masculino</label>
@@ -271,6 +275,7 @@
                                                 <br>
                                                 <label for="form" class="form-label">Razón del No Uso</label>
                                                 <select name="RazonNoUso" id="RazonNoUso" class="form-select">
+                                                    <option value="0">(0)Se Usaron todos</option>
                                                     <option value="1">(1)Guardado</option>
                                                     <option value="2">(2)Regalado</option>
                                                     <option value="3">(3)Perdido</option>
@@ -325,10 +330,10 @@
                                                 <label for="form" class="form-label">Lavado Incorrecto(≥2vez)</label>
                                                 <input type="number" class="form-control" name="NLavadoIncorrecto" id="NLavadoIncorrecto">
                                             </div>
-                                            <div class="col-xl-2">
+                                            {{-- <div class="col-xl-2">
                                                 <label for="form" class="form-label">Lavado Incorrecto(≥2vez)</label>
                                                 <input type="number" class="form-control" name="NLavadoIncorrecto" id="NLavadoIncorrecto">
-                                            </div>
+                                            </div> --}}
                                             <div class="col-xl-2">
                                                 <br>
                                                 <label for="form" class="form-label">Rio, Lago o Quebrada</label>
@@ -437,8 +442,28 @@
             </div>
         </div>
 
-        
+        <div class="col-lg-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Basic modal</button>
+            <!-- Modal -->
+            <div class="modal fade" id="EliminarModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModalEliminar"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">Estas seguro? va a eliminar el registro Id: <p id="ficha_eliminar" style="display: inline-table;"></p></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-primary" id="btnEliminarInteSi">Si</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
        
+    
     </div>
 </div>
 @endsection
@@ -455,7 +480,7 @@
                 url: "EditarEncuestado/"+id,
                 dataType: "json",
                 success: function (response) {
-                    $.each(response, function (index, valor) { 
+                    $.each(response, function (index, valor) {
                         $("#Nombre").val(response[0].Nombre);
                         $("#Apellido").val(response[0].Apellido);
                         $("#Edad").val(response[0].Edad);
@@ -561,7 +586,8 @@
                 "columns":[
                     {data:"IdEncuestado"},
                     {"defaultContent":
-                    "<button class='btn-warning btn-sm btnEditarEncuestado'><i class='lni lni-pencil'></i></button>"},
+                    "<button class='btn-warning btn-sm btnEditarEncuestado'><i class='lni lni-pencil'></i></button>\
+                    <button class='btn-danger btn-sm btnEliminarEncuestado'><i class='lni lni-cross-circle'></i></button>"},
                     {data:"Nombre"},
                     {data:"Apellido"},
                     {data:"Edad"},
@@ -615,6 +641,10 @@
         $(".btnNuevoMonitoreo").click(function(){
             $("#NombreForm").text("Formulario de Registro de Monitoreo");
             $("#idestadoform").val(1);
+            $("#idMonitoreo1").val("");
+            $("#Comunidad").val("");
+            $("#Responsable").val("");
+            $("#CargoResponsable").val("");
             $("#frmMonitoreoModal").modal('show');
         });
 
@@ -648,6 +678,64 @@
 
 @section('script_table_ajax')
     <script>
+         $("#btnEliminarInteSi").click(function(e){
+            e.preventDefault();
+            ruta="";
+            nombre_tabla="";
+            id=$("#ficha_eliminar").text();
+
+            if ($("#ModalEliminar").text()=="Monitoreo") {
+                ruta="EliminarMonitoreo/";
+                nombre_tabla="#ListaMonitoreo"
+            }
+            if ($("#ModalEliminar").text()=="Encuestado") {
+                ruta="EliminarEncuestado/";
+                nombre_tabla="#ListaEncuestado";
+            }
+            // if ($("#ModalEliminar").text()=="ActividadProgramada") {
+            //     ruta="EliminarActProgramada/";
+            //     nombre_tabla="#ListaActividadProgramada";
+            // }
+            
+            $.ajax({
+                type: "GET",
+                url: ruta + id,
+                dataType: "json",
+                success: function (response) {
+                    round_success_noti("Registro Eliminado");
+                    $(nombre_tabla).DataTable().ajax.reload();
+                },
+                error: function (response) {
+                    round_error_noti()
+                }
+            });
+            $("#EliminarModal").modal('hide');
+
+        });
+
+
+        
+        $(document).on("click",".btnEliminarEncuestado",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("Encuestado");//Se le pone eEncuestado porque pregunta al Modal si tiene ese nombre para poder eliminar el encuestado porque se usa el mismo modal para eliminar vregistros de varias tablas   
+            $("#ficha_eliminar").text(id);//el <p> para mostrar el id al momento de eliminar
+            $("#EliminarModal").modal('show')
+        });
+        $(document).on("click",".btnEliminarMonitoreo",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("Monitoreo");      
+            $("#ficha_eliminar").text(id);//el <p> para mostrar el id al momento de eliminar
+            $("#EliminarModal").modal('show')
+        });
+
+
+
         $("#ListaMonitoreo").DataTable({
             "ajax": "ListaMonitoreo",
             "method":'GET',
@@ -655,7 +743,8 @@
                 {data:"MonId"},
                 {"defaultContent":
                 "<button class='btn-warning btn-sm btnEditarMonitoreo'><i class='lni lni-pencil'></i></button>\
-                <button class='btn-success btn-sm btnListaPersona'><i class='lni lni-user'></i></button>"
+                <button class='btn-success btn-sm btnListaPersona'><i class='lni lni-user'></i></button>\
+                <button class='btn-danger btn-sm btnEliminarMonitoreo'><i class='lni lni-cross-circle'></i></button>",
                 },
                 {data:"nombre_dpto"},
                 {data:"nombre_prov"},

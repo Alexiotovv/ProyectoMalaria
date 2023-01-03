@@ -56,7 +56,8 @@
                                     <tr>
                                         <td>{{$item->idform}}</td>
                                         <td>{{$item->Codigo}}</td>
-                                        <td><button class='btn-sm btn-warning btnEditarSegu'><i class='lni lni-pencil'></i></button></td>
+                                        <td><button class='btn-sm btn-warning btnEditarSegu'><i class='lni lni-pencil'></i></button>
+                                            <button class='btn-sm btn-danger btnEliminarSegu'><i class='lni lni-cross-circle'></i></button></td>
                                         <td>
                                             <a class="btn-sm btn-success" href="{{url('Crearformps2',[$item->idform])}}">
                                                 <i class="lni lni-circle-plus"></i>
@@ -535,9 +536,100 @@
                 </div>
             </div>
         </form>
+        <form action="">
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Basic modal</button>
+                <!-- Modal -->
+                <div class="modal fade" id="EliminarModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalEliminar"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">Estas seguro? va a eliminar el registro Id: <p id="ficha_eliminar" style="display: inline-table;"></p></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                <button type="submit" class="btn btn-primary btnEliminarInteSi" >Si</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
 @endsection
 @section('script_table_ajax')
     <script>
+        $(document).on("click",".btnEliminarInteSi",function(){
+            ruta="";
+            nombre_tabla="";
+            id=$("#ficha_eliminar").text();
+
+            if ($("#ModalEliminar").text()=="EliminarSegu") {
+                ruta="EliminarSegu/";
+                $.ajax({
+                    type: "GET",
+                    url: ruta + id,
+                    dataType: "json",
+                        success: function (response) {
+                    },
+                        error: function (response) {
+                    }
+                });
+
+
+            }
+
+            
+
+            
+
+        });
+
+        $(document).on("click",".btnEliminarSegu",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("EliminarSegu");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show');
+
+            // ruta="";
+            // nombre_tabla="";
+            // id=$("#ficha_eliminar").text();
+
+            // if ($("#ModalEliminar").text()=="EliminarSegu") {
+            //     ruta="EliminarSegu/";
+            //     // nombre_tabla="#ListarIntervenciones"
+            // }
+
+            // if ($("#ModalEliminar").text()=="Localidad") {
+            //     ruta="EliminarLocalidad/";
+            //     nombre_tabla="#ListarLocalidad";
+            // }
+            // if ($("#ModalEliminar").text()=="ActividadProgramada") {
+            //     ruta="EliminarActProgramada/";
+            //     nombre_tabla="#ListaActividadProgramada";
+            // }
+
+            // $.ajax({
+            //     type: "GET",
+            //     url: ruta + id,
+            //     dataType: "json",
+            //     success: function (response) {
+            //         round_success_noti("Registro Eliminado");
+            //         $(nombre_tabla).DataTable().ajax.reload();
+            //     },
+            //     error: function (response) {
+            //         round_error_noti()
+            //     }
+            // });
+
+        });
+
         $(document).on("click",".btnGuardarACS",function(){
             CargarACS();
         });
@@ -773,23 +865,23 @@
 <script>
 
 function ObtieneRegiones(dist) {
-          $.ajax({
-              url:"ListarRegiones/" + $("#"+dist+"").val(),
-              method:"GET",
-              dataType:"json",
-              success: function (response) {
-                  $.each(response.lista_regiones, function (key, item) {
-                      if ((item.distId)==($("#"+dist+"").val())) {
-                          $("#Departamento").val(item.dptoId).change();
-                          $("#Provincia").val(item.provId).change();
-                          $("#Departamentoe").val(item.dptoId).change();
-                          $("#Provinciae").val(item.provId).change();
-                          return false;
-                      }
-                  });
-              }
-          });
-      }
+    $.ajax({
+        url:"ListarRegiones/" + $("#"+dist+"").val(),
+        method:"GET",
+        dataType:"json",
+        success: function (response) {
+            $.each(response.lista_regiones, function (key, item) {
+                if ((item.distId)==($("#"+dist+"").val())) {
+                    $("#Departamento").val(item.dptoId).change();
+                    $("#Provincia").val(item.provId).change();
+                    $("#Departamentoe").val(item.dptoId).change();
+                    $("#Provinciae").val(item.provId).change();
+                    return false;
+                }
+            });
+        }
+    });
+}
 
     $(document).ready(function() {
         var table = $('#example2').DataTable( {
@@ -820,7 +912,6 @@ function ObtieneRegiones(dist) {
     });
     var fecha = new Date();
     document.getElementById("FechaVisita1").value = fecha.toJSON().slice(0,10);
-    document.getElementById("FechaVisita2").value = fecha.toJSON().slice(0,10);
-    document.getElementById("FechaVisita3").value = fecha.toJSON().slice(0,10);
+    
 </script>
 @endsection

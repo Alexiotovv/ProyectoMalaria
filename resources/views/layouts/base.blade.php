@@ -64,7 +64,7 @@
 			<ul class="metismenu" id="menu">
 				
 				<li class="menu-label">REGISTROS</li>
-{{-- 					
+			{{-- 					
 					<li>
 						<a class="has-arrow" href="javascript:;">
 							<div class="parent-icon"><i class='bx bx-hourglass'></i>
@@ -131,6 +131,10 @@
 							<div class="menu-title">Otros Registros</div>
 						</a>
 						<ul>
+							<li><a href="{{url ('InformeOperacional')}}"><i class="bx bx-right-arrow-alt"></i>Informe Operacional</a>
+							</li>
+						</ul>
+						<ul>
 							<li><a href="{{url ('tcs_crud')}}"><i class="bx bx-right-arrow-alt"></i>Agentes Comunitarios de Salud</a>
 							</li>
 						</ul>
@@ -138,10 +142,17 @@
 							<li><a href="{{url ('Pruebas')}}"><i class="bx bx-right-arrow-alt"></i>Pruebas y Exámenes</a>
 							</li>
 						</ul>
+						
+
 						<ul>
-							<li><a href="{{url ('Produccion')}}"><i class="bx bx-right-arrow-alt"></i>Producción</a>
+							<li><a href="{{url ('Produccion')}}"><i class="bx bx-right-arrow-alt"></i>Exportar Registros</a>
 							</li>
 						</ul>
+						<ul>
+							<li><a href="{{url ('panel')}}"><i class="bx bx-right-arrow-alt"></i>Panel</a>
+							</li>
+						</ul>
+
 					</li>
 
 					<li class="menu-label">PLAN</li>
@@ -541,7 +552,9 @@
 									<form action="login" method="post">
 										@method('put')
 										@csrf
-										<li><button class="dropdown-item"><i class='bx bx-log-out-circle'></i><span>Cerrar Sesión</span></a>
+										<li><button class="dropdown-item">
+											<i class='bx bx-log-out-circle'></i>
+											<span>Cerrar Sesión</span></a>
 										</li>
 									</form>
 								

@@ -9,6 +9,21 @@ use DB;
 
 class MonitoevaluMosqsController extends Controller
 {
+    public function EliminarEncuestado($id)
+    {
+        $obj=encuestadomosqs::findOrFail($id);
+        $obj->delete();
+        $data=['Mensaje'=>'Listo'];
+        return response()->json($data);
+    }
+    public function EliminarMonitoreo($id)
+    {
+        $obj=monitoevalu_mosqs::findOrFail($id);
+        $obj->delete=1;#cambia el estado de 0 a 1 para indicar que está eliminado no lo elimina
+        $obj->save();
+        $data=['Mensaje'=>'Listo'];
+        return response()->json($data);
+    }
     public function ActualizarEncuestado(Request $request)
     {
         $id=request('idEncuestado');
@@ -48,7 +63,8 @@ class MonitoevaluMosqsController extends Controller
 
     public function ActualizarMonitoreo(Request $request)
     {
-        $id=request('idMonitoreo');
+        // dd("entro a post");
+        $id=request('idMonitoreo1');
         $obj = monitoevalu_mosqs::findOrFail($id);
         $obj->Departamento=request('Departamento');
         $obj->Provincia=request('Provincia');
@@ -92,6 +108,7 @@ class MonitoevaluMosqsController extends Controller
         $obj->NumeroMonitoreo=request('NumeroMonitoreo');
         $obj->Responsable=request('Responsable');
         $obj->CargoResponsable=request('CargoResponsable');
+        $obj->user=auth()->user()->name;
         $obj->save();
         $data=['Mensaje'=>'Registro Guardado'];
         return response()->json($data);
@@ -105,6 +122,7 @@ class MonitoevaluMosqsController extends Controller
         ->leftjoin('dists','dists.id','=','monitoevalu_mosqs.Distrito')
         ->select('monitoevalu_mosqs.id as MonId','monitoevalu_mosqs.*',
         'dptos.*','provs.*','dists.*')
+        ->where('monitoevalu_mosqs.delete','=',0)
         ->get();
         return datatables()->of($lista)->toJson();
     }

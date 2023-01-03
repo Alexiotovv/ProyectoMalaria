@@ -26,6 +26,7 @@ class CreateFormintervencionesTable extends Migration
             $table->string('JefeBrigada', 100)->nullable()->default('');
             $table->date('FechaInicio');
             $table->date('FechaFinal');
+            $table->boolean('delete')->default(false);
             $table->timestamps();
         });
     }

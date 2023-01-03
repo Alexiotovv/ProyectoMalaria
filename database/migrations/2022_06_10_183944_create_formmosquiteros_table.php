@@ -29,6 +29,7 @@ class CreateFormmosquiterosTable extends Migration
             $table->string('eess_cercano_microscopio', 100)->nullable()->default('');
             $table->decimal('tiempo_eesscercano_microscopio', 8, 2)->nullable();
             $table->string('Responsable', 100)->default('');
+            $table->boolean('delete')->default(false);
             $table->timestamps();
         });
     }

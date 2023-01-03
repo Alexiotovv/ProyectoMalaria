@@ -12,6 +12,15 @@ use Carbon\Carbon;
 
 class FormSeguimientoPromotorSaludController extends Controller
 {
+    public function EliminarSegu($id)
+    {
+        $obj = FormSeguimientoPromotorSalud::findOrFail($id);
+        $obj->delete=1;
+        $obj->save();
+        $data=['Mensaje'=>'Listo'];
+        return response()->json($data);
+    }
+
     public function GuardaStockMedicamentos(Request $request)
     {
         $competencias = DB::table('competencias')
@@ -345,6 +354,7 @@ class FormSeguimientoPromotorSaludController extends Controller
         ->leftjoin('estsalud','estsalud.id','=','form_seguimiento_promotor_saluds.NombreEstablecimiento')
         ->select('form_seguimiento_promotor_saluds.id as idform','form_seguimiento_promotor_saluds.*','dists.*','provs.*','dptos.*','medios_transportes.*','estsalud.*')
         ->where('form_seguimiento_promotor_saluds.user','like',$nombre)
+        ->where('form_seguimiento_promotor_saluds.delete','=',0)
         ->get();
 
         $tcs=DB::table('tcs')
@@ -383,6 +393,5 @@ class FormSeguimientoPromotorSaludController extends Controller
         return redirect()->route('Listar.formps')->with(['message'=>$codigo]);
 
     }
-
 
 }

@@ -1,217 +1,371 @@
 @extends('layouts.base')
 @section('content')
-<div class="page-wrapper">
-    <div class="page-content">
-        <div class="row">
-            <div class="col-sm-4">
-                <button type="button" class="btn-sm btn-primary btnNuevaIntervencion" data-bs-toggle="modal">
-                    <i class="lni lni-plus"></i> Nueva Intervención
-                </button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                <table id="ListarIntervenciones" class="table table-striped table-bordered">
-                    <div>
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Código</th>
-                                <th>Acciones</th>
-                                <th>Dpto</th>
-                                <th>Provincia</th>
-                                <th>Distrito</th>
-                                <th>Rio/Quebrada</th>
-                                <th>JefeBrigada</th>
-                                <th>FechaInicio</th>
-                                <th>FechaFinal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </div>
-                </table>
+    <div class="page-wrapper">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-sm-4">
+                    <button type="button" class="btn-sm btn-primary btnNuevaIntervencion" data-bs-toggle="modal">
+                        <i class="lni lni-plus"></i> Nueva Intervención
+                    </button>
                 </div>
             </div>
-        </div>
-        
-        <form id="formNuevaIntervencion">
-            @csrf
-            <div class="modal fade" id="NuevaIntervencionModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Registrar Nueva Intervención</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table id="ListarIntervenciones" class="table table-striped table-bordered">
+                        <div>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Código</th>
+                                    <th>Acciones</th>
+                                    <th>Dpto</th>
+                                    <th>Provincia</th>
+                                    <th>Distrito</th>
+                                    <th>Rio/Quebrada</th>
+                                    <th>JefeBrigada</th>
+                                    <th>FechaInicio</th>
+                                    <th>FechaFinal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <label for="form" class="form-label">Departamento</label>
-                                    <select class="single-select" name="Departamento" id="Departamento" disabled>
-                                        @foreach ($dpto as $d)
-                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
-                                        @endforeach
-                                    </select>    
-                                </div>
-                                <div class="col-4">
-                                    <label for="form" class="form-label">Provincia</label>
-                                    <select name="Provincia" id="Provincia" class="single-select" disabled>
-                                        @foreach ($prov as $p)
-                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <label for="form" class="form-label">Distrito</label>
-                                    <select name="Distrito" id="Distrito" class="single-select" onchange="ObtieneRegiones('Distrito');">
-                                        @foreach ($dist as $d)
-                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
-                                        @endforeach
-                                    </select>        
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <label for="form" class="form-label">Rio/Quebrada</label>
-                                    <input type="text" class="form-control form-control-sm" name="RioQuebrada" id="RioQuebrada">
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="form" class="form-label">JefeBrigada</label>
-                                    <input type="text" class="form-control form-control-sm" name="JefeBrigada" id="JefeBrigada">
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="form" class="form-label">Periodo-FechaInicio</label>
-                                    <input type="date" class="form-control form-control-sm" name="fecha_inicio" id="fecha_inicio" >
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Periodo-FechaFinal</label>
-                                    <input type="date" class="form-control form-control-sm" name="fecha_final" id="fecha_final">
-                                </div>
-                            </div>
+                            </tbody>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                        </div>
+                    </table>
                     </div>
                 </div>
             </div>
-        </form>
-
-        <form id="formEditarIntervencion">
-            @csrf
-            <div class="modal fade" id="EditarIntervencionModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Editar Intervención</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="">
-                                <div class="col-sm-3">
-                                    <input type="text" name="idIntervencion" id="idIntervencion" hidden>
-                                    <label for="">Codigo</label>
-                                    <input type="text" name="codigo" id="codigo" class="form-control form-control-sm" readonly>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <label for="form" class="form-label">Departamento</label>
-                                    <select class="single-select" name="Departamentoe" id="Departamentoe" disabled>
-                                        @foreach ($dpto as $d)
-                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
-                                        @endforeach
-                                    </select>    
-                                </div>
-                                <div class="col-4">
-                                    <label for="form" class="form-label">Provincia</label>
-                                    <select name="Provinciae" id="Provinciae" class="single-select" disabled>
-                                        @foreach ($prov as $p)
-                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <label for="form" class="form-label">Distrito</label>
-                                    <select name="Distritoe" id="Distritoe" class="single-select" onchange="ObtieneRegiones('Distritoe');">
-                                        @foreach ($dist as $d)
-                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
-                                        @endforeach
-                                    </select>        
-                                </div>
+            
+            <form id="formNuevaIntervencion">
+                @csrf
+                <div class="modal fade" id="NuevaIntervencionModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Registrar Nueva Intervención</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <label for="form" class="form-label">Rio/Quebrada</label>
-                                    <input type="text" class="form-control form-control-sm" name="RioQuebradae" id="RioQuebradae">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="form" class="form-label">Departamento</label>
+                                        <select class="single-select" name="Departamento" id="Departamento" disabled>
+                                            @foreach ($dpto as $d)
+                                                <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
+                                            @endforeach
+                                        </select>    
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="form" class="form-label">Provincia</label>
+                                        <select name="Provincia" id="Provincia" class="single-select" disabled>
+                                            @foreach ($prov as $p)
+                                                <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="form" class="form-label">Distrito</label>
+                                        <select name="Distrito" id="Distrito" class="single-select" onchange="ObtieneRegiones('Distrito');">
+                                            @foreach ($dist as $d)
+                                                <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
+                                            @endforeach
+                                        </select>        
+                                    </div>
                                 </div>
-                                <div class="col-lg-2">
-                                    <label for="form" class="form-label">JefeBrigada</label>
-                                    <input type="text" class="form-control form-control-sm" name="JefeBrigadae" id="JefeBrigadae">
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="form" class="form-label">Periodo-FechaInicio</label>
-                                    <input type="date" class="form-control form-control-sm" name="fecha_inicioe" id="fecha_inicioe" value="1900-01-01">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Periodo-FechaFinal</label>
-                                    <input type="date" class="form-control form-control-sm" name="fecha_finale" id="fecha_finale" value="1900-01-01">
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label for="form" class="form-label">Rio/Quebrada</label>
+                                        <input type="text" class="form-control form-control-sm" name="RioQuebrada" id="RioQuebrada">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="form" class="form-label">JefeBrigada</label>
+                                        <input type="text" class="form-control form-control-sm" name="JefeBrigada" id="JefeBrigada">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="form" class="form-label">Periodo-FechaInicio</label>
+                                        <input type="date" class="form-control form-control-sm" name="fecha_inicio" id="fecha_inicio" >
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Periodo-FechaFinal</label>
+                                        <input type="date" class="form-control form-control-sm" name="fecha_final" id="fecha_final">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
-        <form id="FormListarLocalidad">
-            @csrf
-            <div class="modal fade" id="ListarLocalidadModal" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Lista de Localidades</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <button type="button" class="btn-sm btn-primary btnNuevaLocalidad" data-bs-toggle="modal">
-                                        <i class="lni lni-circle-plus"></i> Registrar Localidad
-                                    </button>
+            <form id="formEditarIntervencion">
+                @csrf
+                <div class="modal fade" id="EditarIntervencionModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Editar Intervención</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="">
+                                    <div class="col-sm-3">
+                                        <input type="text" name="idIntervencion" id="idIntervencion" hidden>
+                                        <label for="">Codigo</label>
+                                        <input type="text" name="codigo" id="codigo" class="form-control form-control-sm" readonly>
+                                    </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <label for="">CÓDIGO DE FICHA:</label>
-                                    <input type="text" class="form-control form-control-sm" id="codigo_ficha" readonly>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="form" class="form-label">Departamento</label>
+                                        <select class="single-select" name="Departamentoe" id="Departamentoe" disabled>
+                                            @foreach ($dpto as $d)
+                                                <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
+                                            @endforeach
+                                        </select>    
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="form" class="form-label">Provincia</label>
+                                        <select name="Provinciae" id="Provinciae" class="single-select" disabled>
+                                            @foreach ($prov as $p)
+                                                <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="form" class="form-label">Distrito</label>
+                                        <select name="Distritoe" id="Distritoe" class="single-select" onchange="ObtieneRegiones('Distritoe');">
+                                            @foreach ($dist as $d)
+                                                <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
+                                            @endforeach
+                                        </select>        
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label for="form" class="form-label">Rio/Quebrada</label>
+                                        <input type="text" class="form-control form-control-sm" name="RioQuebradae" id="RioQuebradae">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="form" class="form-label">JefeBrigada</label>
+                                        <input type="text" class="form-control form-control-sm" name="JefeBrigadae" id="JefeBrigadae">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="form" class="form-label">Periodo-FechaInicio</label>
+                                        <input type="date" class="form-control form-control-sm" name="fecha_inicioe" id="fecha_inicioe" value="1900-01-01">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Periodo-FechaFinal</label>
+                                        <input type="date" class="form-control form-control-sm" name="fecha_finale" id="fecha_finale" value="1900-01-01">
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <br>
-                            <div class="card">
-                                <div class="card-body">
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form id="FormListarLocalidad">
+                @csrf
+                <div class="modal fade" id="ListarLocalidadModal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Lista de Localidades</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <button type="button" class="btn-sm btn-primary btnNuevaLocalidad" data-bs-toggle="modal">
+                                            <i class="lni lni-circle-plus"></i> Registrar Localidad
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="">CÓDIGO DE FICHA:</label>
+                                        <input type="text" class="form-control form-control-sm" id="codigo_ficha" readonly>
+                                    </div>
+                                </div>
+                                
+                                <br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="ListarLocalidad" class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Acciones</th>
+                                                        <th>Localidad</th>
+                                                        <th>Poblacion</th>
+                                                        <th>N°Viviendas</th>
+                                                        <th>Lam.Últ.8Sem.</th>
+                                                        <th>N°CasosÚlt.8Sem.</th>
+                                                        <th>IP.Ult.8Sem</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form id="formNuevaLocalidad">
+                @csrf
+                <div class="modal fade" id="NuevaLocalidadModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Registrar Localidad de Intervención</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <input type="text" name="idLocalidadIntervencion" id="idLocalidadIntervencion" hidden>
+                                        <label for="form" class="form-label">Localidad</label>
+                                        <input type="text" name="Localidad" id="Localidad" class="form-control form-control-sm">  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Población</label>
+                                        <input type="number" name="Poblacion" id="Poblacion" class="form-control form-control-sm">  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">N° Viviendas</label>
+                                        <input type="number" name="Nvivienda" id="Nvivienda" class="form-control form-control-sm">      
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Láminas Últimasa 8 Sem.</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="Lamtul8sem" id="Lamtul8sem">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">N° Casos</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="Casosul8sem" id="Casosul8sem">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Índice Positividad Últ. 8 Sem.(N°Casos/Lám)x100</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8sem" id="Iptul8sem" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <form id="formEditarLocalidad">
+                @csrf
+                <div class="modal fade" id="EditarLocalidadModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Editar Localidad de Intervención</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <input type="text" name="idLocalidade" id="idLocalidade" hidden>
+                                        <label for="form" class="form-label">Localidad</label>
+                                        <input type="text" name="Localidade" id="Localidade" class="form-control form-control-sm">  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Población</label>
+                                        <input type="number" step="0.01" name="Poblacione" id="Poblacione" class="form-control form-control-sm">  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">N° Viviendas</label>
+                                        <input type="number" step="0.01" name="Nviviendae" id="Nviviendae" class="form-control form-control-sm">      
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Láminas Últimasa 8 Sem.</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="Lamtul8seme" id="Lamtul8seme">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">N° Casos</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="Casosul8seme" id="Casosul8seme">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Índ. Pos. Últ. 8 Sem.(N°Casos/Lám)x100</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8seme" id="Iptul8seme" readonly>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <form id="FormListarActividadProgramada">
+                @csrf
+                <div class="modal fade" id="ListarActividadProgramadaModal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Lista de Actividades Programadas</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <button type="button" class="btn-sm btn-primary btnAgregarActividadProgramada" data-bs-toggle="modal">
+                                            <i class="lni lni-circle-plus"></i> Nueva Actividad Programada
+                                        </button>
+                                    </div>             
+                                    <br>
                                     <div class="table-responsive">
-                                        <table id="ListarLocalidad" class="table table-striped table-bordered">
+                                        <table id="ListaActividadProgramada" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Id</th>
                                                     <th>Acciones</th>
-                                                    <th>Localidad</th>
-                                                    <th>Poblacion</th>
-                                                    <th>N°Viviendas</th>
-                                                    <th>Lam.Últ.8Sem.</th>
-                                                    <th>N°CasosÚlt.8Sem.</th>
-                                                    <th>IP.Ult.8Sem</th>
+                                                    <th>A.Programada</th>
+                                                    <th>Laminas</th>
+                                                    <th>N°CasasFumigar</th>
+                                                    <th>Lam.Tomadas</th>
+                                                    <th>Vivax</th>
+                                                    <th>Falcip.</th>
+                                                    <th>%Pob.Muestr.</th>
+                                                    <th>IP</th>
+                                                    <th>TP</th>
+                                                    <th>Act.Desan</th>
+                                                    <th>CasasRociadas</th>
+                                                    <th>FechaInicio</th>
+                                                    <th>FechaFinal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -224,394 +378,330 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
-        <form id="formNuevaLocalidad">
-            @csrf
-            <div class="modal fade" id="NuevaLocalidadModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Registrar Localidad de Intervención</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <input type="text" name="idLocalidadIntervencion" id="idLocalidadIntervencion" hidden>
-                                    <label for="form" class="form-label">Localidad</label>
-                                    <input type="text" name="Localidad" id="Localidad" class="form-control form-control-sm">  
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Población</label>
-                                    <input type="number" name="Poblacion" id="Poblacion" class="form-control form-control-sm">  
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">N° Viviendas</label>
-                                    <input type="number" name="Nvivienda" id="Nvivienda" class="form-control form-control-sm">      
-                                </div>
+            <form id="formAgregarActividadProgramada">
+                @csrf
+                <div class="modal fade" id="formAgregarActividadProgramadaModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Registrar Actividad Programada</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Láminas Últimasa 8 Sem.</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Lamtul8sem" id="Lamtul8sem">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <input type="text" name="idLocalidad_actpro" id="idLocalidad_actpro" hidden>
+                                        <label for="form" class="form-label">Actividad Programada</label>
+                                        <select class="single-select" name="act_programadas" id="act_programadas">
+                                            <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
+                                            <option value="BH">BH-BARRIDO HEMÁTICO</option>    
+                                            <option value="TM">TM-TRATAMIENTO MASIVO</option>
+                                            <option value="M">M-ENTREGA DE MOSQUITERO</option>
+                                            <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
+                                            <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
+                                            <option value="TP">TP-TASA DE PREVALENCIA</option>
+                                            <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
+                                            <option value="C">C-CONTROL</option>
+                                            <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
+                                            <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
+                                            <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
+                                            <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Láminas a tomar</label>
+                                        <input type="number" step="0.01" name="LaminasTomar" id="LaminasTomar" class="form-control form-control-sm">  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Casas a Rociar y/o Fumigar</label>
+                                        <input type="number" step="0.01" name="CasasRociar" id="CasasRociar" class="form-control form-control-sm">      
+                                    </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">N° Casos</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Casosul8sem" id="Casosul8sem">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Laminas Tomadas</label>
+                                        <input type="number" value="0" name="LaminasTomadas" step="0.01" id="LaminasTomadas" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Vivax</label>
+                                        <input type="number" value="0" step="0.01" name="Vivax" id="Vivax" class="form-control form-control-sm">      
+                                    </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Índice Positividad Últ. 8 Sem.(N°Casos/Lám)x100</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8sem" id="Iptul8sem" readonly>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Falciparum</label>
+                                        <input type="number" value="0" step="0.01" name="Falciparum" id="Falciparum" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Pob.Muestreada(%)</label>
+                                        <input type="number" value="0" step="0.01" name="ProbMuestreada" id="ProbMuestreada" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Ind.Pos.(N°Casos/Láminas)x100</label>
+                                        <input type="number" value="0" step="0.01" name="IndicePos" id="IndicePos" class="form-control form-control-sm" readonly>      
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">TasaPrevalencia</label>
+                                        <input type="number" value="0" step="0.01" name="TasaPre" id="TasaPre" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Act.Desarrollada</label>
+                                        <select class="single-select" name="ActDesa" id="ActDesa">
+                                            <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
+                                            <option value="BH">BH-BARRIDO HEMÁTICO</option>    
+                                            <option value="TM">TM-TRATAMIENTO MASIVO</option>
+                                            <option value="M">M-ENTREGA DE MOSQUITERO</option>
+                                            <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
+                                            <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
+                                            <option value="TP">TP-TASA DE PREVALENCIA</option>
+                                            <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
+                                            <option value="C">C-CONTROL</option>
+                                            <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
+                                            <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
+                                            <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
+                                            <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Casas Rocias y/o Fumigadas</label>
+                                        <input type="number" value="0" step="0.01" name="CasasRociadas" id="CasasRociadas" class="form-control form-control-sm">      
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="" class="form-label">Fecha Inicio Intervención</label>
+                                        <input type="date" name="FechaInicio" id="FechaInicio" class="form-control">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="" class="form-label">Fecha Final Intervención</label>
+                                        <input type="date" name="FechaFinal" id="FechaFinal" class="form-control">
+                                    </div>
+                                </div>      
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn-sm btn-warning">Guardar</button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                    </div>
+
+                </div>
+
+                        
+
+                    </div>
+                </div>
+            </form>
+
+            <form id="formEditarActividadProgramada">
+                @csrf
+                <div class="modal fade" id="EditarActividadProgramadaModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Editar Actividad Programada</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="">Id</label>
+                                        <input type="text" name="idact_pro" id="idact_pro" class="form-control form-control-sm" readonly>
+                                        <label for="form" class="form-label">Actividad Programada</label>
+                                        <select class="single-select" name="act_programadase" id="act_programadase">
+                                            <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
+                                            <option value="BH">BH-BARRIDO HEMÁTICO</option>    
+                                            <option value="TM">TM-TRATAMIENTO MASIVO</option>
+                                            <option value="M">M-ENTREGA DE MOSQUITERO</option>
+                                            <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
+                                            <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
+                                            <option value="TP">TP-TASA DE PREVALENCIA</option>
+                                            <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
+                                            <option value="C">C-CONTROL</option>
+                                            <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
+                                            <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
+                                            <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
+                                            <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Láminas a tomar</label>
+                                        <input type="number" step="0.01" name="LaminasTomare" id="LaminasTomare" class="form-control form-control-sm">  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Casas a Rociar y Fumigar</label>
+                                        <input type="number" step="0.01" name="CasasRociare" id="CasasRociare" class="form-control form-control-sm">      
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Laminas Tomadas</label>
+                                        <input type="number" step="0.01" value="0" name="LaminasTomadase" id="LaminasTomadase" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Vivax</label>
+                                        <input type="number"step="0.01"  value="0" name="Vivaxe" id="Vivaxe" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Falciparum</label>
+                                        <input type="number" step="0.01" value="0" name="Falciparume" id="Falciparume" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Prob.Muestreada</label>
+                                        <input type="number" step="0.01" value="0" name="ProbMuestreadae" id="ProbMuestreadae" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">IndicePos.(N°Casos/Lám)x100</label>
+                                        <input type="number" step="0.01" value="0" name="IndicePose" id="IndicePose" class="form-control form-control-sm" readonly>      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">TasaPrevalencia</label>
+                                        <input type="number" step="0.01" value="0" name="TasaPree" id="TasaPree" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Act.Desarrollada</label>
+                                        <select class="single-select" name="ActDesae" id="ActDesae">
+                                            <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
+                                            <option value="BH">BH-BARRIDO HEMÁTICO</option>    
+                                            <option value="TM">TM-TRATAMIENTO MASIVO</option>
+                                            <option value="M">M-ENTREGA DE MOSQUITERO</option>
+                                            <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
+                                            <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
+                                            <option value="TP">TP-TASA DE PREVALENCIA</option>
+                                            <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
+                                            <option value="C">C-CONTROL</option>
+                                            <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
+                                            <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
+                                            <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
+                                            <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="form" class="form-label">Casas Rociadas y/o Fumigadas</label>
+                                        <input type="number" value="0" name="CasasRociadase" id="CasasRociadase" class="form-control form-control-sm">      
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <label for="" class="form-label">Fecha Inicio Intervención</label>
+                                        <input type="date" name="FechaInicioe" id="FechaInicioe" class="form-control">
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <label for="" class="form-label">Fecha Final Intervención</label>
+                                        <input type="date" name="FechaFinale" id="FechaFinale" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div class="col-lg-12">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Basic modal</button>
+                <!-- Modal -->
+                <div class="modal fade" id="EliminarModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalEliminar"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">Estas seguro? va a eliminar el registro Id: <p id="ficha_eliminar" style="display: inline-table;"></p></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-primary" id="btnEliminarInteSi">Si</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
-        
-        <form id="formEditarLocalidad">
-            @csrf
-            <div class="modal fade" id="EditarLocalidadModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Editar Localidad de Intervención</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
 
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <input type="text" name="idLocalidade" id="idLocalidade" hidden>
-                                    <label for="form" class="form-label">Localidad</label>
-                                    <input type="text" name="Localidade" id="Localidade" class="form-control form-control-sm">  
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Población</label>
-                                    <input type="number" step="0.01" name="Poblacione" id="Poblacione" class="form-control form-control-sm">  
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">N° Viviendas</label>
-                                    <input type="number" step="0.01" name="Nviviendae" id="Nviviendae" class="form-control form-control-sm">      
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Láminas Últimasa 8 Sem.</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Lamtul8seme" id="Lamtul8seme">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">N° Casos</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Casosul8seme" id="Casosul8seme">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Índ. Pos. Últ. 8 Sem.(N°Casos/Lám)x100</label>
-                                    <input type="number" step="0.01" class="form-control form-control-sm" name="Iptul8seme" id="Iptul8seme" readonly>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        
-        <form id="FormListarActividadProgramada">
-            @csrf
-            <div class="modal fade" id="ListarActividadProgramadaModal" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Lista de Actividades Programadas</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <button type="button" class="btn-sm btn-primary btnAgregarActividadProgramada" data-bs-toggle="modal">
-                                        <i class="lni lni-circle-plus"></i> Nueva Actividad Programada
-                                    </button>
-                                </div>             
-                                <br>
-                                <div class="table-responsive">
-                                    <table id="ListaActividadProgramada" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Id</th>
-                                                <th>Acciones</th>
-                                                <th>A.Programada</th>
-                                                <th>Laminas</th>
-                                                <th>N°CasasFumigar</th>
-                                                <th>Lam.Tomadas</th>
-                                                <th>Vivax</th>
-                                                <th>Falcip.</th>
-                                                <th>%Pob.Muestr.</th>
-                                                <th>IP</th>
-                                                <th>TP</th>
-                                                <th>Act.Desan</th>
-                                                <th>CasasRociadas</th>
-                                                <th>FechaInicio</th>
-                                                <th>FechaFinal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
 
-        <form id="formAgregarActividadProgramada">
-            @csrf
-            <div class="modal fade" id="formAgregarActividadProgramadaModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Registrar Actividad Programada</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <input type="text" name="idLocalidad_actpro" id="idLocalidad_actpro" hidden>
-                                    <label for="form" class="form-label">Actividad Programada</label>
-                                    <select class="single-select" name="act_programadas" id="act_programadas">
-                                        <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
-                                        <option value="BH">BH-BARRIDO HEMÁTICO</option>    
-                                        <option value="TM">TM-TRATAMIENTO MASIVO</option>
-                                        <option value="M">M-ENTREGA DE MOSQUITERO</option>
-                                        <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
-                                        <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
-                                        <option value="TP">TP-TASA DE PREVALENCIA</option>
-                                        <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
-                                        <option value="C">C-CONTROL</option>
-                                        <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
-                                        <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
-                                        <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
-                                        <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Láminas a tomar</label>
-                                    <input type="number" step="0.01" name="LaminasTomar" id="LaminasTomar" class="form-control form-control-sm">  
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Casas a Rociar y/o Fumigar</label>
-                                    <input type="number" step="0.01" name="CasasRociar" id="CasasRociar" class="form-control form-control-sm">      
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Laminas Tomadas</label>
-                                    <input type="number" value="0" name="LaminasTomadas" step="0.01" id="LaminasTomadas" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Vivax</label>
-                                    <input type="number" value="0" step="0.01" name="Vivax" id="Vivax" class="form-control form-control-sm">      
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Falciparum</label>
-                                    <input type="number" value="0" step="0.01" name="Falciparum" id="Falciparum" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Pob.Muestreada(%)</label>
-                                    <input type="number" value="0" step="0.01" name="ProbMuestreada" id="ProbMuestreada" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Ind.Pos.(N°Casos/Láminas)x100</label>
-                                    <input type="number" value="0" step="0.01" name="IndicePos" id="IndicePos" class="form-control form-control-sm" readonly>      
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">TasaPrevalencia</label>
-                                    <input type="number" value="0" step="0.01" name="TasaPre" id="TasaPre" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Act.Desarrollada</label>
-                                    <select class="single-select" name="ActDesa" id="ActDesa">
-                                        <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
-                                        <option value="BH">BH-BARRIDO HEMÁTICO</option>    
-                                        <option value="TM">TM-TRATAMIENTO MASIVO</option>
-                                        <option value="M">M-ENTREGA DE MOSQUITERO</option>
-                                        <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
-                                        <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
-                                        <option value="TP">TP-TASA DE PREVALENCIA</option>
-                                        <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
-                                        <option value="C">C-CONTROL</option>
-                                        <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
-                                        <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
-                                        <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
-                                        <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Casas Rocias y/o Fumigadas</label>
-                                    <input type="number" value="0" step="0.01" name="CasasRociadas" id="CasasRociadas" class="form-control form-control-sm">      
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="" class="form-label">Fecha Inicio Intervención</label>
-                                    <input type="date" name="FechaInicio" id="FechaInicio" class="form-control">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="" class="form-label">Fecha Final Intervención</label>
-                                    <input type="date" name="FechaFinal" id="FechaFinal" class="form-control">
-                                </div>
-                            </div>      
-                                
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-                    
-
-                </div>
-            </div>
-        </form>
-
-        <form id="formEditarActividadProgramada">
-            @csrf
-            <div class="modal fade" id="EditarActividadProgramadaModal" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5>Editar Actividad Programada</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="">Id</label>
-                                    <input type="text" name="idact_pro" id="idact_pro" class="form-control form-control-sm" readonly>
-                                    <label for="form" class="form-label">Actividad Programada</label>
-                                    <select class="single-select" name="act_programadase" id="act_programadase">
-                                        <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
-                                        <option value="BH">BH-BARRIDO HEMÁTICO</option>    
-                                        <option value="TM">TM-TRATAMIENTO MASIVO</option>
-                                        <option value="M">M-ENTREGA DE MOSQUITERO</option>
-                                        <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
-                                        <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
-                                        <option value="TP">TP-TASA DE PREVALENCIA</option>
-                                        <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
-                                        <option value="C">C-CONTROL</option>
-                                        <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
-                                        <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
-                                        <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
-                                        <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Láminas a tomar</label>
-                                    <input type="number" step="0.01" name="LaminasTomare" id="LaminasTomare" class="form-control form-control-sm">  
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Casas a Rociar y Fumigar</label>
-                                    <input type="number" step="0.01" name="CasasRociare" id="CasasRociare" class="form-control form-control-sm">      
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Laminas Tomadas</label>
-                                    <input type="number" step="0.01" value="0" name="LaminasTomadase" id="LaminasTomadase" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Vivax</label>
-                                    <input type="number"step="0.01"  value="0" name="Vivaxe" id="Vivaxe" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Falciparum</label>
-                                    <input type="number" step="0.01" value="0" name="Falciparume" id="Falciparume" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Prob.Muestreada</label>
-                                    <input type="number" step="0.01" value="0" name="ProbMuestreadae" id="ProbMuestreadae" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">IndicePos.(N°Casos/Lám)x100</label>
-                                    <input type="number" step="0.01" value="0" name="IndicePose" id="IndicePose" class="form-control form-control-sm" readonly>      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">TasaPrevalencia</label>
-                                    <input type="number" step="0.01" value="0" name="TasaPree" id="TasaPree" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Act.Desarrollada</label>
-                                    <select class="single-select" name="ActDesae" id="ActDesae">
-                                        <option value="BA">BA-BÚSQUEDA ACTIVA</option>    
-                                        <option value="BH">BH-BARRIDO HEMÁTICO</option>    
-                                        <option value="TM">TM-TRATAMIENTO MASIVO</option>
-                                        <option value="M">M-ENTREGA DE MOSQUITERO</option>
-                                        <option value="RV">RV-ROCIADO DE VIVIENDA</option>  
-                                        <option value="IP">IP-ÍNDICE DE POSITIVIDAD</option>
-                                        <option value="TP">TP-TASA DE PREVALENCIA</option>
-                                        <option value="IPHH">IPHH-ÍNDICE PICADURA HOMBRE HORA</option>
-                                        <option value="C">C-CONTROL</option>
-                                        <option value="ABC">ABC-ABASTECIMIENTO A BOTIQUÍN COMUNAL</option>
-                                        <option value="APS">APS-ABASTECIMIENTO A PUESTO DE SALUD</option>
-                                        <option value="TS">TS-TRATAMIENTO SELECTIVO</option>
-                                        <option value="BFF">BFF-BLOQUEO FARMACOLÓGIO FAMILIAR</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="form" class="form-label">Casas Rociadas y/o Fumigadas</label>
-                                    <input type="number" value="0" name="CasasRociadase" id="CasasRociadase" class="form-control form-control-sm">      
-                                </div>
-                                <div class="col-xl-4">
-                                    <label for="" class="form-label">Fecha Inicio Intervención</label>
-                                    <input type="date" name="FechaInicioe" id="FechaInicioe" class="form-control">
-                                </div>
-                                <div class="col-xl-4">
-                                    <label for="" class="form-label">Fecha Final Intervención</label>
-                                    <input type="date" name="FechaFinale" id="FechaFinale" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-
+        </div>
     </div>
-</div>
-
 @endsection
+
 @section('script_ajax')
     <script>
+        $("#btnEliminarInteSi").click(function(e){
+            e.preventDefault();
+            ruta="";
+            nombre_tabla="";
+            id=$("#ficha_eliminar").text();
+
+            if ($("#ModalEliminar").text()=="Intervención") {
+                ruta="EliminarIntervencion/";
+                nombre_tabla="#ListarIntervenciones"
+            }
+            if ($("#ModalEliminar").text()=="Localidad") {
+                ruta="EliminarLocalidad/";
+                nombre_tabla="#ListarLocalidad";
+            }
+            if ($("#ModalEliminar").text()=="ActividadProgramada") {
+                ruta="EliminarActProgramada/";
+                nombre_tabla="#ListaActividadProgramada";
+            }
+            
+            $.ajax({
+                type: "GET",
+                url: ruta + id,
+                dataType: "json",
+                success: function (response) {
+                    round_success_noti("Registro Eliminado");
+                    $(nombre_tabla).DataTable().ajax.reload();
+                },
+                error: function (response) {
+                    round_error_noti()
+                }
+            });
+            $("#EliminarModal").modal('hide');
+
+        });
+
+        //Modal para eliminar para los 3 formularios Intervencion,Localidad y Act. Programadas
+        $(document).on("click",".btnEliminarIntervencion",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("Intervención");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show')
+        });
+
+        $(document).on("click",".btnEliminarLocalidad",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("Localidad");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show')
+        });
+        $(document).on("click",".btnEliminarActProgramada",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("ActividadProgramada");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show')
+        });
         
         // <button class='btn-danger btn-sm btnEjecucionActividadProgramada'><i class='lni lni-control-panel'></i></button>"
         $("#Casosul8sem").keyup(function(){
@@ -751,7 +841,7 @@
                 dataType: "json",
                 success: function (response) {
                     $("#ListaActividadProgramada").DataTable().ajax.reload();
-                    round_success_noti("Registro Guardado");
+                        nd_success_noti("Registro Guardado");
                 },
                 error: function (response) {
                     round_error_noti()
@@ -771,10 +861,6 @@
             id=parseInt(fila.find('td:eq(0)').text());
             $("#idLocalidad_actpro").val(id);
 
-            // numero_casos=parseInt((fila).find('td:eq(6)').text());
-            // $("#NumeroCasos").val(numero_casos);
-            // $("#NumeroCasose").val(numero_casos);
-
             $("#ListaActividadProgramada").DataTable({
             "destroy":true,
             "ajax": "ListaActividadProgramada/"+id,
@@ -782,7 +868,8 @@
             "columns":[
                 {data:"ActiProgramadaId"},
                 {"defaultContent":
-                "<button class='btn-warning btn-sm btnEditarActividadProgramada'><i class='lni lni-pencil'></i></button>"},
+                "<button class='btn-warning btn-sm btnEditarActividadProgramada'><i class='lni lni-pencil'></i></button>\
+                <button class='btn-danger btn-sm btnEliminarActProgramada'><i class='lni lni-cross-circle'></i></button>"},
                 {data:"act_programadas"},
                 {data:"laminas"},
                 {data:"casas_fumigar"},
@@ -796,6 +883,7 @@
                 {data:"CasasRociadas"},
                 {data:"FechaInicio"},
                 {data:"FechaFinal"},
+                
             ],
             order:[0]
             });
@@ -821,6 +909,7 @@
             $('#EditarLocalidadModal').modal('hide');
         });
 
+        
         $(document).on("click",".btnEditarLocalidad",function(e){
             e.preventDefault();
             fila=$(this).closest("tr");
@@ -881,7 +970,8 @@
                 {data:"localidadId"},
                 {"defaultContent":
                 "<button class='btn-warning btn-sm btnEditarLocalidad'><i class='lni lni-pencil'></i></button>\
-                <button class='btn-success btn-sm btnListaActividadProgramada'><i class='lni lni-agenda'></i></button>"
+                <button class='btn-success btn-sm btnListaActividadProgramada'><i class='lni lni-agenda'></i></button>\
+                <button class='btn-danger btn-sm btnEliminarLocalidad'><i class='lni lni-cross-circle'></i></button>"
                 },
                 {data:"Localidad"},
                 {data:"Poblacion"},
@@ -1008,7 +1098,8 @@
                 {data:"codigo"},
                 {"defaultContent":
                 "<button class='btn-warning btn-sm btnEditarIntervencion'><i class='lni lni-pencil'></i></button>\
-                <button class='btn-success btn-sm btnListarLocalidad'><i class='lni lni-world'></i></button>"
+                <button class='btn-success btn-sm btnListarLocalidad'><i class='lni lni-world'></i></button>\
+                <button class='btn-danger btn-sm btnEliminarIntervencion'><i class='lni lni-cross-circle'></i></button>"
                 },
                 {data:"nombre_dpto"},
                 {data:"nombre_prov"},
@@ -1028,26 +1119,25 @@
 @endsection
 
 @section('script_select2')
-
-<script>
-    $('.single-select').select2({
-        theme: 'bootstrap4',
-        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        placeholder: $(this).data('placeholder'),
-        allowClear: Boolean($(this).data('allow-clear')),
-    });
-    $('.multiple-select').select2({
-        theme: 'bootstrap4',
-        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        placeholder: $(this).data('placeholder'),
-        allowClear: Boolean($(this).data('allow-clear')),
-    });
-    var fecha = new Date();
-    document.getElementById("fecha_inicio").value = fecha.toJSON().slice(0,10);
-    document.getElementById("fecha_final").value = fecha.toJSON().slice(0,10);
-    document.getElementById("FechaInicio").value = fecha.toJSON().slice(0,10);
-    document.getElementById("FechaFinal").value = fecha.toJSON().slice(0,10);
-</script>
+    <script>
+        $('.single-select').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+        });
+        $('.multiple-select').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+        });
+        var fecha = new Date();
+        document.getElementById("fecha_inicio").value = fecha.toJSON().slice(0,10);
+        document.getElementById("fecha_final").value = fecha.toJSON().slice(0,10);
+        document.getElementById("FechaInicio").value = fecha.toJSON().slice(0,10);
+        document.getElementById("FechaFinal").value = fecha.toJSON().slice(0,10);
+    </script>
 @endsection
 
 

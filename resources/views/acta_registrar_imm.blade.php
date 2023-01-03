@@ -21,8 +21,7 @@
                                 <th style="text-align: center;">Prov.</th>
                                 <th style="text-align: center;">Dist.</th>
                                 <th style="text-align: center;">Localidad</th>
-                                <th style="text-align: center;">Nombre del ACS</th>
-                                <th style="text-align: center;">DNI</th>
+                                <th style="text-align: center;">DNI_ACS</th>
                                 <th style="text-align: center;">Com. de Procedencia</th>
                                 <th style="text-align: center;">Nombre del ESS</th>
                                 <th style="text-align: center;">Tiempo Horas del ESS</th>
@@ -83,11 +82,10 @@
                                 
                                 <div class="row">
                                     <div class="col-xl-5">
-                                        {{-- <label for="form" class="form-label">Nombre del ACS</label>
-                                        <input name="NombreTCS" id="NombreTCS" value="-" class="form-control form-control-sm" > --}}
+                                       
                                         <label class="form-label">Nombre del ACS</label>
                                         <div class="input-group">
-                                            <select class="single-select" name="NombreTCS" id="NombreTCS">
+                                            <select class="single-select" name="DNI" id="DNI">
                                                 @foreach ($tcs as $tc)
                                                     <option value="{{$tc->dni_tcs}}">{{$tc->dni_tcs}}-{{$tc->nombre_tcs}}</option>
                                                 @endforeach
@@ -95,11 +93,6 @@
                                             <button class="btn btn-outline-secondary btnAgregarACS" type="button"><i class='bx bx-user-plus'></i>
                                             </button>
                                         </div>  
-                                    </div>
-                                    
-                                    <div class="col-xl-2">
-                                        <label for="form" class="form-label">DNI</label>
-                                        <input name="DNI" id="DNI" value="" class="form-control form-control-sm" type="text">
                                     </div>
                                     <div class="col-xl-2">
                                         <label for="form" class="form-label">Com. Proc.</label>
@@ -192,7 +185,7 @@
                                     <div class="col-xl-5">
                                         <label class="form-label">Nombre del ACS</label>
                                         <div class="input-group">
-                                            <select class="single-select" name="editNombreTCS" id="editNombreTCS">
+                                            <select class="single-select" name="editDNI" id="editDNI">
                                                 @foreach ($tcs as $tc)
                                                     <option value="{{$tc->dni_tcs}}">{{$tc->dni_tcs}}-{{$tc->nombre_tcs}}</option>
                                                 @endforeach
@@ -202,10 +195,6 @@
                                         </div>  
                                     </div>
                                     
-                                    <div class="col-xl-2">
-                                        <label for="form" class="form-label">DNI</label>
-                                        <input name="editDNI" id="editDNI" class="form-control form-control-sm" type="text">
-                                    </div>
                                     <div class="col-xl-2">
                                         <label for="form" class="form-label">Comu.Proc.</label>
                                         <input name="editComunidad" id="editComunidad" class="form-control form-control-sm" required="required">
@@ -327,15 +316,15 @@
                         url: "ListaTCSjson",
                         dataType: "json",
                         success: function (response) {
-                            $("#NombreTCS").empty();
-                            $("#editNombreTCS").empty();
+                            $("#DNI").empty();
+                            $("#editDNI").empty();
                             $.each(response, function (key, item){
                                 if ((item.dni_tcs)==$("#dni_tcs").val()) {
-                                    $("#NombreTCS").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
-                                    $("#editNombreTCS").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#DNI").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#editDNI").append('<option selected value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
                                 }else{
-                                    $("#NombreTCS").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
-                                    $("#editNombreTCS").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');    
+                                    $("#DNI").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');
+                                    $("#editDNI").append('<option value=' + item.dni_tcs + '>'+item.dni_tcs+"-"+item.nombre_tcs+'</option>');    
                                 }
                                 
                             });  
@@ -390,6 +379,10 @@
                 dataType: "json",
                 success: function (response) {
                     $('#ListaInsumosMaterialesM').DataTable().ajax.reload();
+                    round_success_noti("Registro Guardado");
+                },
+                error: function (response) { 
+                    round_error_noti()
                 }
             });
             $("#editDepartamento").prop('disabled', true);
@@ -412,9 +405,8 @@
                     $("#editDepartamento").val(response[0].dptoId).change();
                     $("#editProvincia").val(response[0].provId).change();
                     $("#editDistrito").val(response[0].distId).change();
-                    $("#editDNI").val(response[0].DNI);
+                    $("#editDNI").val(response[0].DNI).change();
                     $("#editLocalidad").val(response[0].Localidad);
-                    $("#editNombreTCS").val(response[0].NombreTCS);
                     $("#editComunidad").val(response[0].Comunidad);
                     $("#editNombreESS").val(response[0].NombreESS);
                     $("#editTiempo").val(response[0].TiempoHorasESS);
@@ -443,7 +435,6 @@
                 {data:"nombre_prov"},
                 {data:"nombre_dist"},
                 {data:"Localidad"},
-                {data:"NombreTCS"},
                 {data:"DNI"},
                 {data:"Comunidad"},
                 {data:"NombreESS"},

@@ -57,8 +57,7 @@ class actaentregaimmsController extends Controller
         $obj->DepartamentoId=request('Departamento');
         $obj->ProvinciaId=request('Provincia');
         $obj->DistritoId=request('Distrito');
-        $obj->Localidad=request('Localidad');
-        $obj->NombreTCS=request('NombreTCS');        
+        $obj->Localidad=request('Localidad');      
         $obj->Comunidad=request('Comunidad');
         $obj->NombreESS=request('NombreESS');
         $obj->TiempoHorasESS=request('Tiempo');
@@ -92,7 +91,6 @@ class actaentregaimmsController extends Controller
         $obj->ProvinciaId = request('editProvincia');
         $obj->DistritoId = request('editDistrito');
         $obj->Localidad = request('editLocalidad');
-        $obj->NombreTCS = request('editNombreTCS');
         $obj->Comunidad = request('editComunidad');
         $obj->NombreESS = request('editNombreESS');
         $obj->TiempoHorasESS = request('editTiempo');

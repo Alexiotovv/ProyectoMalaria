@@ -492,17 +492,6 @@
 </form>
 
 
-
-
-
-
-
-
-
-
-
-
-
 <form id="formMoniteroMosquitero">
     @csrf
     <div class="modal fade" id="MoniteroMosquiteroModal" aria-hidden="true">

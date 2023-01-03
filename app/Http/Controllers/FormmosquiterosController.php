@@ -10,6 +10,33 @@ use Carbon\Carbon;
 
 class FormmosquiterosController extends Controller
 {
+
+  public function EliminarEntregaMosquitero($id)
+  {
+    $obj=formlistaentregamosq::findOrFail($id);
+    $obj->delete();
+    $data=['Mensaje'=>'Listo'];
+    return response()->json($data);
+  }
+
+  public function EliminarPersonaMosquitero($id)
+  {
+    $obj=formpersonamq::findOrfail($id);
+    $obj->delete();
+    $data=['Mensaje'=>'Listo'];
+    return response()->json($data);
+  }
+
+  public function EliminarMosquitero($id)//Actualiza campo Delete 0 a 1
+  {
+    $obj = formmosquiteros::findOrFail($id);
+    $obj->delete=1;
+    $obj->save();
+    $data=['Mensaje'=>'Listo'];
+    return response()->json($data);
+
+  }
+
   public function ActualizaEntregaMosq(Request $request)
   {
       $id = request('idEntregaPersonae');
@@ -79,6 +106,7 @@ class FormmosquiterosController extends Controller
       ->get();
       return response()->json($lista);
   }
+
   public function GuardaPersonaMosquitero(Request $request)
   {
     $obj = new formpersonamq();
@@ -95,6 +123,7 @@ class FormmosquiterosController extends Controller
     $data=['mensaje'=>'Guardado'];
     return response()->json($data);
   }
+
   public function ListarPersonaMosquitero($id)
     {
       $lista=DB::table('formpersonamqs')
@@ -182,6 +211,7 @@ class FormmosquiterosController extends Controller
       ->select('formmosquiteros.id as mosquiteroId','formmosquiteros.*',
       'dptos.*','provs.*','dists.*')
       ->where('formmosquiteros.user','like',$nombre)
+      ->where('delete','=',0)
       ->get();
       return datatables()->of($lista)->toJson();
     }

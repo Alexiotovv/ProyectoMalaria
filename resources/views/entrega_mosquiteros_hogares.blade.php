@@ -43,230 +43,234 @@
     </div>
 </div>
 
-<form id="formGuardaMosquitero">
-    @csrf
-    <div class="modal fade" id="AgregaMosquiteroModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Ficha Entrega Mosquitero</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="row">
+{{-- FICHA DE REGISTRO DE MOSQUITEROS --}}
+    <form id="formGuardaMosquitero">
+        @csrf
+        <div class="modal fade" id="AgregaMosquiteroModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Ficha Entrega Mosquitero</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="row">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label for="form" class="form-label">Departamento</label>
+                                    <select class="single-select" name="departamento" id="departamento" disabled>
+                                        @foreach ($dpto as $d)
+                                            <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
+                                        @endforeach
+                                    </select>    
+                                </div>
+                                <div class="col-4">
+                                    <label for="form" class="form-label">Provincia</label>
+                                    <select name="provincia" id="provincia" class="single-select" disabled>
+                                        @foreach ($prov as $p)
+                                            <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label for="form" class="form-label">Distrito</label>
+                                    <select name="distrito" id="distrito" class="single-select" onchange="ObtieneRegiones('distrito');">
+                                        @foreach ($dist as $d)
+                                            <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
+                                        @endforeach
+                                    </select>        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">Localidad</label>
+                                <input type="text" class="form-control form-control-sm" name="localidad" id="localidad">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">FechaEntrega</label>
+                                <input type="date" value="1900-01-01" class="form-control form-control-sm" name="fecha_entrega" id="fecha_entrega">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">EESSCercano</label>
+                                <input type="text" class="form-control form-control-sm" name="eess_cercano" id="eess_cercano">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">T.EESSCercano</label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" name="tiempo_eesscercano" id="tiempo_eesscercano">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="form" class="form-label">EESS CercanoMicroscopio</label>
+                                <input type="text" class="form-control form-control-sm" name="eess_cercano_microscopio" id="eess_cercano_microscopio">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="form" class="form-label">T.EESSCercanoMicroscopio</label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" name="tiempo_eesscercano_microscopio" id="tiempo_eesscercano_microscopio">
+                            </div>
                             <div class="col-4">
+                                <label for="form" class="form-label">Responsable</label>
+                                <input type="text" class="form-control form-control-sm" id="responsable" name="responsable">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{{-- CIERRE DE FICHA MOSQUITEROS --}}
+
+{{-- EDITAR FICHAS MOSQUITEROS --}}
+    <form id="formEditarMosquitero">
+        @csrf
+        <div class="modal fade" id="EditarMosquiteroModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Ficha Entrega Mosquitero</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="">Código</label>
+                                <input type="text" id="ecodigo" name="ecodigo" class="form-control form-control-sm" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <input type="text" name="idMosquitero" id="idMosquitero" hidden>
                                 <label for="form" class="form-label">Departamento</label>
-                                <select class="single-select" name="departamento" id="departamento" disabled>
+                                <select class="single-select" name="edepartamento" id="edepartamento" disabled>
                                     @foreach ($dpto as $d)
                                         <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
                                     @endforeach
                                 </select>    
                             </div>
-                            <div class="col-4">
+                            <div class="col-lg-4">
                                 <label for="form" class="form-label">Provincia</label>
-                                <select name="provincia" id="provincia" class="single-select" disabled>
+                                <select name="eprovincia" id="eprovincia" class="single-select" disabled>
                                     @foreach ($prov as $p)
                                         <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-4">
+                            <div class="col-lg-4">
                                 <label for="form" class="form-label">Distrito</label>
-                                <select name="distrito" id="distrito" class="single-select" onchange="ObtieneRegiones('distrito');">
+                                <select name="edistrito" id="edistrito" class="single-select" onchange="ObtieneRegiones('edistrito');">
                                     @foreach ($dist as $d)
                                         <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
                                     @endforeach
                                 </select>        
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Localidad</label>
-                            <input type="text" class="form-control form-control-sm" name="localidad" id="localidad">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">Localidad</label>
+                                <input type="text" class="form-control form-control-sm" name="elocalidad" id="elocalidad">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">FechaEntrega</label>
+                                <input type="date" value="1900-01-01" class="form-control form-control-sm" name="efecha_entrega" id="efecha_entrega">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">EESSCercano</label>
+                                <input type="text" class="form-control form-control-sm" name="eeess_cercano" id="eeess_cercano">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="form" class="form-label">T.EESSCercano</label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" name="etiempo_eesscercano" id="etiempo_eesscercano">
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">FechaEntrega</label>
-                            <input type="date" value="1900-01-01" class="form-control form-control-sm" name="fecha_entrega" id="fecha_entrega">
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">EESSCercano</label>
-                            <input type="text" class="form-control form-control-sm" name="eess_cercano" id="eess_cercano">
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">T.EESSCercano</label>
-                            <input type="number" step="0.01" class="form-control form-control-sm" name="tiempo_eesscercano" id="tiempo_eesscercano">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label for="form" class="form-label">EESS CercanoMicroscopio</label>
-                            <input type="text" class="form-control form-control-sm" name="eess_cercano_microscopio" id="eess_cercano_microscopio">
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="form" class="form-label">T.EESSCercanoMicroscopio</label>
-                            <input type="number" step="0.01" class="form-control form-control-sm" name="tiempo_eesscercano_microscopio" id="tiempo_eesscercano_microscopio">
-                        </div>
-                        <div class="col-4">
-                            <label for="form" class="form-label">Responsable</label>
-                            <input type="text" class="form-control form-control-sm" id="responsable" name="responsable">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<form id="formEditarMosquitero">
-    @csrf
-    <div class="modal fade" id="EditarMosquiteroModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Ficha Entrega Mosquitero</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label for="">Código</label>
-                            <input type="text" id="ecodigo" name="ecodigo" class="form-control form-control-sm" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <input type="text" name="idMosquitero" id="idMosquitero" hidden>
-                            <label for="form" class="form-label">Departamento</label>
-                            <select class="single-select" name="edepartamento" id="edepartamento" disabled>
-                                @foreach ($dpto as $d)
-                                    <option value="{{$d->id}}">{{$d->nombre_dpto}}</option>    
-                                @endforeach
-                            </select>    
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="form" class="form-label">Provincia</label>
-                            <select name="eprovincia" id="eprovincia" class="single-select" disabled>
-                                @foreach ($prov as $p)
-                                    <option value="{{$p->id}}">{{$p->nombre_prov}}</option>    
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="form" class="form-label">Distrito</label>
-                            <select name="edistrito" id="edistrito" class="single-select" onchange="ObtieneRegiones('edistrito');">
-                                @foreach ($dist as $d)
-                                    <option value="{{$d->id}}">{{$d->codigo}}-{{$d->nombre_dist}}</option>    
-                                @endforeach
-                            </select>        
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Localidad</label>
-                            <input type="text" class="form-control form-control-sm" name="elocalidad" id="elocalidad">
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">FechaEntrega</label>
-                            <input type="date" value="1900-01-01" class="form-control form-control-sm" name="efecha_entrega" id="efecha_entrega">
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">EESSCercano</label>
-                            <input type="text" class="form-control form-control-sm" name="eeess_cercano" id="eeess_cercano">
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">T.EESSCercano</label>
-                            <input type="number" step="0.01" class="form-control form-control-sm" name="etiempo_eesscercano" id="etiempo_eesscercano">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label for="form" class="form-label">EESS CercanoMicroscopio</label>
-                            <input type="text" class="form-control form-control-sm" name="eeess_cercano_microscopio" id="eeess_cercano_microscopio">
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="form" class="form-label">T.EESSCercanoMicroscopio</label>
-                            <input type="number" step="0.01" class="form-control form-control-sm" name="etiempo_eesscercano_microscopio" id="etiempo_eesscercano_microscopio">
-                        </div>
-                        <div class="col-4">
-                            <label for="form" class="form-label">Responsable</label>
-                            <input type="text" class="form-control form-control-sm" name="eresponsable" id="eresponsable">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<form id="formListarPersonaMosquitero">
-    @csrf
-    <div class="modal fade" id="ListarPersonaMosquiteroModal" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Lista Personas Recibieron Mosquitero</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <h6 style="text-align: center">Lista Personas Recibieron Mosquitero</h6>
-                        <div class="col-sm-3">
-                            <button type="button" class="btn-sm btn-primary btnNuevaPersona" data-bs-toggle="modal">
-                                <i class="lni lni-plus"></i> Agregar Persona
-                            </button>
-                        </div>
-                        <div class="col-sm-3">
-                            <label for="">Código Ficha</label>
-                            <input type="text" class="form-control form-control-sm" id="codigo_ficha" readonly>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                            <table id="ListarPersonaMosquitero" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Acciones</th>
-                                        <th>dni</th>
-                                        <th>nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>N°Personas</th>
-                                        <th>TamañoMNI.</th>
-                                        <th>EstadoMNI.</th>
-                                        <th>TamañoMI.</th>
-                                        <th>EstadoMI.</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-            
-                                </tbody>
-                            </table>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="form" class="form-label">EESS CercanoMicroscopio</label>
+                                <input type="text" class="form-control form-control-sm" name="eeess_cercano_microscopio" id="eeess_cercano_microscopio">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="form" class="form-label">T.EESSCercanoMicroscopio</label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" name="etiempo_eesscercano_microscopio" id="etiempo_eesscercano_microscopio">
+                            </div>
+                            <div class="col-4">
+                                <label for="form" class="form-label">Responsable</label>
+                                <input type="text" class="form-control form-control-sm" name="eresponsable" id="eresponsable">
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                    </div>
                 </div>
-                {{-- <div class="modal-footer">
-                    <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn-sm btn-warning">Guardar</button>
-                </div> --}}
             </div>
         </div>
-    </div>
-</form>
+    </form>
+{{-- EDITAR FICHAS MOSQUITEROS--}}
+
+{{-- LISTAR PERSONAS MOSQUITEROS --}}
+    <form id="formListarPersonaMosquitero">
+        @csrf
+        <div class="modal fade" id="ListarPersonaMosquiteroModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Lista Personas Recibieron Mosquitero</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <h6 style="text-align: center">Lista Personas Recibieron Mosquitero</h6>
+                            <div class="col-sm-3">
+                                <button type="button" class="btn-sm btn-primary btnNuevaPersona" data-bs-toggle="modal">
+                                    <i class="lni lni-plus"></i> Agregar Persona
+                                </button>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="">Código Ficha</label>
+                                <input type="text" class="form-control form-control-sm" id="codigo_ficha" readonly>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                <table id="ListarPersonaMosquitero" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Acciones</th>
+                                            <th>dni</th>
+                                            <th>nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>N°Personas</th>
+                                            <th>TamañoMNI.</th>
+                                            <th>EstadoMNI.</th>
+                                            <th>TamañoMI.</th>
+                                            <th>EstadoMI.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="modal-footer">
+                        <button type="button" class="btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn-sm btn-warning">Guardar</button>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+    </form>
+{{-- LISTAR PERSONAS MOSQUITEROS --}}
 
 <form id="formGuardaPersona">
     @csrf
@@ -298,13 +302,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" style="border-right-style: inset;">
                             <hr>
                             <label for="" class="form-label">Censo Antes de Entrega NO IMPREGNADOS</label>
-                            
                             <div class="row">                            
-                                <div class="col-lg-6">
+                                <div class="col-lg-6" >
                                     <label for="form" class="form-label">cantidad</label>
                                     <select name="tamanomos_noimp" id="tamanomos_noimp" class="form-select form-select-sm">
                                         <option value="--">--</option>
@@ -332,7 +334,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" >
                             <hr>
                             <label for="" class="form-label">Censo Antes de Entrega IMPREGNADOS</label>
                             
@@ -405,57 +407,72 @@
                             <input value="0" type="number" class="form-control form-control-sm" name="enpersonas" id="enpersonas">
                         </div>
                     </div>
+
                     <div class="row">
-                        
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Cantidad</label>
-                            <select name="etamanomos_noimp" id="etamanomos_noimp" class="form-select form-select-sm">
-                                <option value="--">--</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Estado Mosqu.NoImp.</label>
-                            <select name="eestadomos_noimp" id="eestadomos_noimp" class="form-select form-select-sm">
-                                <option value="--">--</option>
-                                <option value="B">BUEN ESTADO</option>
-                                <option value="M">MAL ESTADO</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Cantidad</label>
-                            <select name="etamanomos_imp" id="etamanomos_imp" class="form-select form-select-sm">
-                                <option value="--">--</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="form" class="form-label">Estado Mosqu.Imp.</label>
-                            <select name="eestadomos_imp" id="eestadomos_imp" class="form-select form-select-sm">
-                                <option value="--">--</option>
-                                <option value="B">BUEN ESTADO</option>
-                                <option value="M">MAL ESTADO</option>
-                            </select>
+                        <div class="col-lg-6" style="border-right-style: inset;">
+                            <hr>
+                            <label for="" class="form-label">Censo Antes de Entrega NO IMPREGNADOS</label>
+                            <div class="row">
+                                <div class="col-lg-6" >
+                                    <label for="form" class="form-label">Cantidad</label>
+                                    <select name="etamanomos_noimp" id="etamanomos_noimp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">Estado Mosqu.NoImp.</label>
+                                    <select name="eestadomos_noimp" id="eestadomos_noimp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="B">BUEN ESTADO</option>
+                                        <option value="M">MAL ESTADO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>    
+                        <div class="col-lg-6">
+                            <hr>
+                            <label for="" class="form-label">Censo Antes de Entrega IMPREGNADOS</label>
+                            <div class="row">
+                                
+
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">Cantidad</label>
+                                    {{-- Este campo es la cantidad --}}
+                                    <select name="etamanomos_imp" id="etamanomos_imp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="form" class="form-label">Estado Mosqu.Imp.</label>
+                                    <select name="eestadomos_imp" id="eestadomos_imp" class="form-select form-select-sm">
+                                        <option value="--">--</option>
+                                        <option value="B">BUEN ESTADO</option>
+                                        <option value="M">MAL ESTADO</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -619,11 +636,102 @@
     </div>
 </form>
 
+<div class="col">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Basic modal</button>
+    <!-- Modal -->
+    <div class="modal fade" id="EliminarModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalEliminar"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">Estas seguro? va a eliminar el registro Id: <p id="ficha_eliminar" style="display: inline-table;"></p></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="btnEliminarFichaMosqSi">Si</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 @section('script_table')
     <script>
 
+$("#btnEliminarFichaMosqSi").click(function(e){
+            e.preventDefault();
+            ruta="";
+            nombre_tabla="";
+            id=$("#ficha_eliminar").text();
+
+            if ($("#ModalEliminar").text()=="Mosquitero") {
+                ruta="EliminarMosquitero/";
+                nombre_tabla="#ListaMosquiteros"
+            }
+            if ($("#ModalEliminar").text()=="Persona") {
+                ruta="EliminarPersonaMosquitero/";
+                nombre_tabla="#ListarPersonaMosquitero";
+            }
+            if ($("#ModalEliminar").text()=="Entrega") {
+                ruta="EliminarEntregaMosquitero/";
+                nombre_tabla="#ListarEntregaMosquitero";
+            }
+            
+            $.ajax({
+                type: "GET",
+                url: ruta + id,
+                dataType: "json",
+                success: function (response) {
+                    round_success_noti("Registro Eliminado");
+                    $(nombre_tabla).DataTable().ajax.reload();
+                },
+                error: function (response) {
+                    round_error_noti()
+                }
+            });
+            $("#EliminarModal").modal('hide');
+
+        });
+
+
+         //Modal para eliminar para los 3 formularios Intervencion, Localidad y Act. Programadas
+         $(document).on("click",".btnEliminarMosquitero",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            $("#ModalEliminar").text("Mosquitero");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show');
+        });
+        
+        $(document).on("click",".btnEliminarPersonaMosquitero",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("Persona");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show')
+        });
+
+
+        $(document).on("click",".btnEliminarEntregaMosquitero",function(e){
+            e.preventDefault();
+            fila=$(this).closest("tr");
+            id=(fila).find('td:eq(0)').text();
+            
+            $("#ModalEliminar").text("Entrega");      
+            $("#ficha_eliminar").text(id);
+            $("#EliminarModal").modal('show')
+        });
+        ///////////////////////////////////////////////////////////////////////
+
+        
         $("#btnActualizarEntregaMosq").click(function (){
             var serializedData = $("#formEditarEntregaMosquitero").serialize();
             $.ajax({
@@ -707,7 +815,10 @@
                 "columns":[
                     {data:"formlistaentregamosqsId"},
                     {"defaultContent":
-                    "<button class='btn-warning btn-sm btnEditarEntrega'><i class='lni lni-pencil-alt'></i></button>"},
+                    "<button class='btn-warning btn-sm btnEditarEntrega'><i class='lni lni-pencil-alt'></i></button>\
+                    <button class='btn-danger btn-sm btnEliminarEntregaMosquitero'><i class='lni lni-cross-circle'></i></button>"
+                    },
+                    
                     {data:"doble"},
                     {data:"familiar1"},
                     {data:"familiar2"},
@@ -808,7 +919,10 @@
                     {data:"formpersonamqsId"},
                     {"defaultContent":
                      "<button class='btn-warning btn-sm btnEditarPersona'><i class='lni lni-pencil-alt'></i></button>\
-                     <button class='btn-success btn-sm btnEntregaMosquitero'><i class='lni lni-grid'></i></button>"},
+                     <button class='btn-success btn-sm btnEntregaMosquitero'><i class='lni lni-grid'></i></button>\
+                     <button class='btn-danger btn-sm btnEliminarPersonaMosquitero'><i class='lni lni-cross-circle'></i></button>"
+                    },
+                     
                      {data:"dni"},
                      {data:"nombres"},
                     {data:"apellidos"},
@@ -921,6 +1035,8 @@
 
 @section('script_table_ajax')
     <script>
+        
+
         $("#ListaMosquiteros").DataTable({
             "ajax": "ListarMosquiteros",
             "method":'GET',
@@ -929,7 +1045,8 @@
                 {data:"Codigo"},
                 {"defaultContent":
                 "<button class='btn-warning btn-sm btnEditarMosquitero'><i class='lni lni-pencil'></i></button>\
-                <button class='btn-success btn-sm btnListaPersonaMosquitero'><i class='lni lni-user'></i></button>"
+                <button class='btn-success btn-sm btnListaPersonaMosquitero'><i class='lni lni-user'></i></button>\
+                <button class='btn-danger btn-sm btnEliminarMosquitero'><i class='lni lni-cross-circle'></i></button>"
                 },
                 {data:"nombre_dpto"},
                 {data:"nombre_prov"},

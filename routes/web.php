@@ -26,6 +26,8 @@ use App\Http\Controllers\AsistenciatsController;
 use App\Http\Controllers\AsistenciaacsController;
 use App\Http\Controllers\MonitoevaluMosqsController;
 use App\Http\Controllers\ProduccionController;
+use App\Http\Controllers\InformeoperacionalsMainController;
+use App\Http\Controllers\PanelController;
 
 Route::get('/', function () {
     return view('login');
@@ -81,6 +83,8 @@ Route::post("Crearformps",[FormSeguimientoPromotorSaludController::class, "Crear
 Route::get("EditarFormSeg/{id}",[FormSeguimientoPromotorSaludController::class, "EditarFormSeg"])->name('EditarFormSeg');
 Route::post("ActualizarFormSeg",[FormSeguimientoPromotorSaludController::class, "ActualizarFormSeg"])->name('Actualizar.FormSeg');
 Route::post("GuardaStockMedicamentos",[FormSeguimientoPromotorSaludController::class, "GuardaStockMedicamentos"])->name('Guarda.StockMedicamentos');
+
+Route::get("EliminarSegu/{id}",[FormSeguimientoPromotorSaludController::class, "EliminarSegu"])->name('Eliminar.Segu');
 
 
 Route::get("ListarCompetencias/{id}",[FormSeguimientoPromotorSaludController::class, "ListarCompetencias"])->name('Listar.Competencias');
@@ -155,7 +159,9 @@ Route::get("EditarMosquiteros/{id}",[FormmosquiterosController::class, "EditarMo
 Route::post("ActualizarMosquiteros",[FormmosquiterosController::class, "ActualizarMosquiteros"])->name('Actualizar.Mosquiteros');
 Route::post("ActualizaEntregaMosq",[FormmosquiterosController::class, "ActualizaEntregaMosq"])->name('Actualiza.EntregaMosq');
 Route::get("EditarEntregaMosq/{id}",[FormmosquiterosController::class, "EditarEntregaMosq"])->name('Editar.EntregaMosq');
-
+Route::get("EliminarMosquitero/{id}",[FormmosquiterosController::class, "EliminarMosquitero"])->name('Eliminar.Mosquitero');
+Route::get("EliminarPersonaMosquitero/{id}",[FormmosquiterosController::class, "EliminarPersonaMosquitero"])->name('Eliminar.PersonaMosquitero');
+Route::get("EliminarEntregaMosquitero/{id}",[FormmosquiterosController::class, "EliminarEntregaMosquitero"])->name('Eliminar.EntregaMosquitero');
 
 Route::get("ListarPersonaMosquitero/{id}",[FormmosquiterosController::class, "ListarPersonaMosquitero"])->name('Listar.PersonaMosquitero');
 Route::post("GuardaPersonaMosquitero",[FormmosquiterosController::class, "GuardaPersonaMosquitero"])->name('Guarda.PersonaMosquitero');
@@ -172,7 +178,10 @@ Route::post("ActualizarIntervencion",[FormintervencionesController::class, "Actu
 Route::get("formIntervencion",[FormintervencionesController::class, "formIntervencion"])->name('form.Intervencion');
 Route::post("ActualizarIntervencionNew",[FormintervencionesController::class, "ActualizarIntervencionNew"])->name('ActualizarIntervencionNew');
 Route::get("ListarLocalidadActividades/{id}",[FormintervencionesController::class, "ListarLocalidadActividades"])->name('Listar.LocalidadActividades');
+
 Route::get("EliminarIntervencion/{id}",[FormintervencionesController::class, "EliminarIntervencion"])->name('Eliminar.Intervencion');
+Route::get("EliminarLocalidad/{id}",[FormintervencionesController::class, "EliminarLocalidad"])->name('Eliminar.Localidad');
+Route::get("EliminarActProgramada/{id}",[FormintervencionesController::class, "EliminarACtProgramada"])->name('Eliminar.ActProgramada');
 
 
 Route::get("ListarLocalidad/{id}",[FormintervencionesController::class, "ListarLocalidad"])->name('Listar.Localidad');
@@ -201,6 +210,8 @@ Route::get("ListaMonitoreo",[MonitoevaluMosqsController::class, "ListaMonitoreo"
 Route::post("GuardaMonitoreo",[MonitoevaluMosqsController::class, "GuardaMonitoreo"])->name('Guarda.Monitoreo');
 Route::get("EditarMonitoreo/{id}",[MonitoevaluMosqsController::class, "EditarMonitoreo"])->name('Editar.Monitoreo');
 Route::post("ActualizarMonitoreo",[MonitoevaluMosqsController::class, "ActualizarMonitoreo"])->name('Actualizar.Monitoreo');
+Route::get("EliminarMonitoreo/{id}",[MonitoevaluMosqsController::class, "EliminarMonitoreo"])->name('Eliminar.Monitoreo');
+Route::get("EliminarEncuestado/{id}",[MonitoevaluMosqsController::class, "EliminarEncuestado"])->name('Eliminar.Encuestado');
 
 Route::get("ListaEncuestado/{id}",[MonitoevaluMosqsController::class, "ListaEncuestado"])->name('Lista.Encuestado');
 Route::post("GuardarEncuestado",[MonitoevaluMosqsController::class, "GuardarEncuestado"])->name('Guardar.Encuestado');
@@ -209,7 +220,21 @@ Route::post("ActualizarEncuestado",[MonitoevaluMosqsController::class, "Actualiz
 
 Route::get("Produccion",[ProduccionController::class, "Produccion"])->name('Lista.Produccion');
 Route::get("NumeroRegistros",[ProduccionController::class, "NumeroRegistros"])->name('Numero.Registros');
+Route::get("ProduccionIntervenciones",[ProduccionController::class, "ProduccionIntervenciones"])->name('Produccion.Intervenciones');
+Route::get("ProduccionSeguimientoACSActividades",[ProduccionController::class, "ProduccionSeguimientoACSActividades"])->name('Produccion.SeguimientoACSActividades');
+Route::get("ProduccionSeguimientoACSStock",[ProduccionController::class, "ProduccionSeguimientoACSStock"])->name('Produccion.SeguimientoACSStock');
+#Route::get("ProduccionEntregaMosquiteros",[ProduccionController::class, "ProduccionEntregaMosquiteros"])->name('Produccion.EntregaMosquiteros');
 
+Route::get("Exportar",[ProduccionController::class, "Exportar"])->name('Exportar');
+Route::get("ExportarActaEntrega",[ProduccionController::class, "ExportarEntregaIMM"])->name('Exportar.EntregaIMM');
+Route::get("ExportarSeguimientoACS",[ProduccionController::class, "ExportarSeguimientoACS"])->name('ExportarSeguimientoACS');
+Route::get("ExportarSeguimientoACSStock",[ProduccionController::class, "ExportarSeguimientoACSStock"])->name('ExportarSeguimientoACSStock');
+Route::get("ExportarEntregaMosquiteros",[ProduccionController::class, "ExportarEntregaMosquiteros"])->name('Exportar.EntregaMosquiteros');
+Route::get("ExportarAsistCapacACS",[ProduccionController::class, "ExportarAsistCapacACS"])->name('Exportar.AsistCapacACS');
+
+Route::get("panel",[PanelController::class, "panel"])->name('panel');
+
+Route::get("InformeOperacional",[InformeoperacionalsMainController::class, "InformeOperacional"])->name('Informe.Operacional');
 
 /////////////////////////////////////////LOGIN AND REGISTER
 Route::get('login',function(){
